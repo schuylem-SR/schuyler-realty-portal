@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal — Schuyler Realty</title>
+<style>
+  :root { --kw-red:#CC0000;--kw-red-dark:#A30000;--kw-dark:#1a1a1a;--kw-gray:#4a4a4a;--kw-light:#f7f7f7;--kw-border:#e0e0e0;color-scheme:light; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--kw-light);min-height:100vh;display:flex;flex-direction:column}
+  .site-header{background:var(--kw-dark);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;flex-shrink:0}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo-mark{width:36px;height:36px;background:var(--kw-red);border-radius:6px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:18px}
+  .logo-text .brand{color:white;font-size:16px;font-weight:700;display:block}
+  .logo-text .sub{color:#aaa;font-size:11px}
+  .header-kw{color:#aaa;font-size:12px}
+  .header-kw span{color:var(--kw-red);font-weight:700}
+  .login-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 16px}
+  .login-card{background:white;border:1px solid var(--kw-border);border-radius:16px;padding:40px 36px;width:100%;max-width:400px;box-shadow:0 4px 24px rgba(0,0,0,0.08);text-align:center}
+  .login-icon{width:60px;height:60px;background:#FFF0F0;border:2px solid #FFD0D0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px}
+  .login-card h1{font-size:22px;color:var(--kw-dark);margin-bottom:6px}
+  .login-card p{font-size:14px;color:var(--kw-gray);margin-bottom:28px;line-height:1.5}
+  .login-card label{display:block;text-align:left;font-size:12px;font-weight:700;color:var(--kw-gray);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+  .login-card input{width:100%;border:1.5px solid var(--kw-border);border-radius:8px;padding:12px 16px;font-size:18px;letter-spacing:4px;text-align:center;color:var(--kw-dark);outline:none;margin-bottom:20px;font-family:inherit}
+  .login-card input:focus{border-color:var(--kw-red)}
+  .login-btn{width:100%;background:var(--kw-red);color:white;border:none;border-radius:8px;padding:14px;font-size:15px;font-weight:700;cursor:pointer}
+  .login-btn:hover{background:var(--kw-red-dark)}
+  .error-msg{color:var(--kw-red);font-size:13px;margin-top:12px;display:none}
+  .login-help{margin-top:24px;font-size:12px;color:#999}
+  .login-help a{color:var(--kw-red);text-decoration:none}
+  .site-footer{background:var(--kw-dark);color:#777;font-size:12px;text-align:center;padding:16px;flex-shrink:0}
+  .site-footer span{color:var(--kw-red)}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="logo" href="#">
+    <div class="logo-mark">SR</div>
+    <div class="logo-text"><span class="brand">Schuyler Realty</span><span class="sub">Client Portal</span></div>
+  </a>
+  <div class="header-kw">A <span>Keller Williams</span> Team</div>
+</header>
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-icon">🔑</div>
+    <h1>Welcome to Your Client Portal</h1>
+    <p>Enter the access code Mark sent you to view your property details, ask HOA questions, and review your documents.</p>
+    <label for="codeInput">Your Access Code</label>
+    <input type="text" id="codeInput" placeholder="e.g. birrer2026" autocomplete="off" autocapitalize="none" onkeydown="if(event.key==='Enter') login()">
+    <button class="login-btn" onclick="login()">Access My Portal →</button>
+    <div class="error-msg" id="errorMsg">That code was not recognized. Please check with Mark Schuyler.</div>
+    <div class="login-help">Need help? <a href="mailto:markschuyler@kw.com">markschuyler@kw.com</a></div>
+  </div>
+</div>
+<footer class="site-footer">© 2026 Schuyler Realty &nbsp;·&nbsp; <span>Keller Williams</span> Consultants Realty &nbsp;·&nbsp; Grove City, OH</footer>
+<script src="clients-config.js"></script>
+<script>
+  function login(){
+    const code=document.getElementById('codeInput').value.trim().toLowerCase();
+    const err=document.getElementById('errorMsg');
+    if(CLIENTS[code]){sessionStorage.setItem('sr_client',code);window.location.href='portal.html';}
+    else{err.style.display='block';document.getElementById('codeInput').focus();}
+  }
+  if(sessionStorage.getItem('sr_client')){window.location.href='portal.html';}
+</script>
+</body>
+</html>

@@ -20,7 +20,7 @@ const CLIENTS = {
     builder: "Epcon Communities",
     agent_note: "Your agent is Mark Schuyler. Call or text anytime: (614) 555-0100",
     closing_window: "September 19-29, 2026",
-    action_item: "Action needed: Sign the Guardian Technology addendum via DocuSign.",
+    action_item: "",
 
     hoa_rules: `THE COURTYARDS AT MULBERRY RUN - COMMUNITY POLICIES AND GUIDELINES (Dated: October 9, 2023)
 

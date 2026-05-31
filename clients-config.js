@@ -18,7 +18,7 @@ const CLIENTS = {
     community: "The Courtyards at Mulberry Run",
     city: "Grove City, OH",
     builder: "Epcon Communities",
-    agent_note: "Your agent is Mark Schuyler. Call or text anytime: (614) 555-0100",
+    agent_note: "Your agent is Mark Schuyler. Call or text anytime: (740) 953-1769",
     closing_window: "September 19-29, 2026",
     action_item: "",
 

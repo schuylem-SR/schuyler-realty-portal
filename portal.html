@@ -3,87 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Portal - Schuyler Realty</title>
+<title>My Portal — Schuyler Realty</title>
 <style>
-:root{--kw-red:#CC0000;--kw-red-dark:#A30000;--kw-dark:#1a1a1a;--kw-gray:#4a4a4a;--kw-light:#f7f7f7;--kw-border:#e0e0e0;color-scheme:light}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--kw-light);min-height:100vh;display:flex;flex-direction:column}
-.site-header{background:var(--kw-dark);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;flex-shrink:0}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-mark{width:32px;height:32px;background:var(--kw-red);border-radius:5px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:16px}
-.logo-text .brand{color:white;font-size:15px;font-weight:700;display:block}
-.logo-text .sub{color:#888;font-size:11px}
-.header-right{display:flex;align-items:center;gap:16px}
-.client-badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 12px;color:white;font-size:12px}
-.logout-btn{background:none;border:1px solid #555;border-radius:6px;color:#aaa;padding:5px 12px;font-size:12px;cursor:pointer}
-.logout-btn:hover{color:white;border-color:#999}
-.property-bar{background:white;border-bottom:3px solid var(--kw-red);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.property-info h2{font-size:16px;color:var(--kw-dark);font-weight:700}
-.property-info p{font-size:12px;color:var(--kw-gray);margin-top:1px}
-.action-badge{background:#FFF3CD;border:1px solid #FBBF24;border-radius:6px;padding:6px 12px;font-size:12px;color:#92400E;font-weight:600;max-width:400px}
-.tabs{background:white;border-bottom:1px solid var(--kw-border);display:flex;padding:0 20px;flex-shrink:0}
-.tab-btn{background:none;border:none;border-bottom:3px solid transparent;padding:14px 18px;font-size:14px;font-weight:600;color:var(--kw-gray);cursor:pointer;margin-bottom:-1px;display:flex;align-items:center;gap:7px;white-space:nowrap}
-.tab-btn:hover{color:var(--kw-dark)}
-.tab-btn.active{color:var(--kw-red);border-bottom-color:var(--kw-red)}
-.tab-panel{display:none;flex:1;flex-direction:column;min-height:0}
-.tab-panel.active{display:flex}
-.chat-container{display:flex;flex-direction:column;flex:1;min-height:0}
-.chat-header{background:white;border-bottom:1px solid var(--kw-border);padding:10px 20px;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.chat-header h3{font-size:14px;color:var(--kw-dark);font-weight:700}
-.chat-header p{font-size:12px;color:var(--kw-gray)}
-.quick-bar{background:#fafafa;border-bottom:1px solid var(--kw-border);padding:8px 16px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex-shrink:0}
-.quick-label{font-size:11px;color:#999;font-weight:600;white-space:nowrap}
-.quick-btn{background:white;border:1px solid var(--kw-border);border-radius:16px;padding:4px 11px;font-size:12px;color:var(--kw-gray);cursor:pointer}
-.quick-btn:hover{border-color:var(--kw-red);color:var(--kw-red);background:#fff5f5}
-.chat-messages{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
-.welcome-msg{background:#fff5f5;border:1px solid #FFCDD2;border-radius:12px;padding:16px 18px;max-width:560px}
-.welcome-msg .wm-title{font-weight:700;color:var(--kw-red);margin-bottom:6px;font-size:14px}
-.welcome-msg p{font-size:13px;color:var(--kw-gray);line-height:1.6}
-.msg{display:flex;gap:8px;max-width:640px}
-.msg.user{align-self:flex-end;flex-direction:row-reverse}
-.msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
-.msg.bot .msg-av{background:var(--kw-red);color:white}
-.msg.user .msg-av{background:var(--kw-dark);color:white}
-.msg-bubble{background:white;border:1px solid var(--kw-border);border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.6;color:var(--kw-dark);max-width:calc(100% - 42px)}
-.msg.user .msg-bubble{background:var(--kw-dark);color:white;border-color:var(--kw-dark)}
-.msg-bubble strong{color:var(--kw-red)}
-.msg.user .msg-bubble strong{color:#FF9999}
-.msg-bubble ul{margin:6px 0 4px 16px}
-.msg-bubble li{margin-bottom:3px}
-.typing{display:flex;align-items:center;gap:4px;padding:4px 0}
-.typing span{width:6px;height:6px;background:#ccc;border-radius:50%;animation:bounce 1.2s infinite}
-.typing span:nth-child(2){animation-delay:0.2s}
-.typing span:nth-child(3){animation-delay:0.4s}
-@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-.chat-input-bar{background:white;border-top:1px solid var(--kw-border);padding:12px 16px;display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
-.chat-input-bar textarea{flex:1;border:1.5px solid var(--kw-border);border-radius:8px;padding:9px 13px;font-size:14px;font-family:inherit;resize:none;min-height:40px;max-height:100px;outline:none;color:var(--kw-dark)}
-.chat-input-bar textarea:focus{border-color:var(--kw-red)}
-.send-btn{background:var(--kw-red);color:white;border:none;border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
-.send-btn:hover{background:var(--kw-red-dark)}
-.send-btn:disabled{background:#ccc;cursor:not-allowed}
-.send-btn svg{width:17px;height:17px}
-.chat-disclaimer{font-size:11px;color:#bbb;text-align:center;padding:4px 16px 8px;flex-shrink:0}
-.summary-panel{flex:1;overflow-y:auto;padding:20px}
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;max-width:900px}
-.summary-card{background:white;border:1px solid var(--kw-border);border-radius:12px;padding:18px}
-.summary-card h3{font-size:13px;font-weight:700;color:var(--kw-red);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
-.summary-row{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0f0f0;gap:10px}
-.summary-row:last-child{border-bottom:none}
-.summary-label{font-size:12px;color:var(--kw-gray);font-weight:600;flex-shrink:0;min-width:100px}
-.summary-value{font-size:12px;color:var(--kw-dark);text-align:right}
-.status-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
-.status-done{background:#D1FAE5;color:#065F46}
-.status-pending{background:#FEF3C7;color:#92400E}
-.status-upcoming{background:#E0E7FF;color:#3730A3}
-.contact-panel{flex:1;overflow-y:auto;padding:20px}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-width:900px}
-.contact-card{background:white;border:1px solid var(--kw-border);border-radius:10px;padding:16px;display:flex;gap:12px}
-.contact-av{width:38px;height:38px;border-radius:50%;background:var(--kw-red);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-.contact-info .role{font-size:11px;color:var(--kw-gray);text-transform:uppercase;font-weight:700;letter-spacing:0.4px}
-.contact-info .cname{font-size:14px;font-weight:700;color:var(--kw-dark);margin:2px 0}
-.contact-info a{font-size:12px;color:var(--kw-red);text-decoration:none;display:block}
-.site-footer{background:var(--kw-dark);color:#777;font-size:12px;text-align:center;padding:14px;flex-shrink:0}
-.site-footer span{color:var(--kw-red)}
+  :root {
+    --kw-red: #CC0000;
+    --kw-red-dark: #A30000;
+    --kw-dark: #1a1a1a;
+    --kw-gray: #4a4a4a;
+    --kw-light: #f7f7f7;
+    --kw-border: #e0e0e0;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: var(--kw-light);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  .site-header {
+    background: var(--kw-dark);
+    padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px; flex-shrink: 0;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark { width: 32px; height: 32px; background: var(--kw-red); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 16px; }
+  .logo-text .brand { color: white; font-size: 15px; font-weight: 700; display: block; }
+  .logo-text .sub   { color: #888; font-size: 11px; }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .client-badge { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 4px 12px; color: white; font-size: 12px; }
+  .logout-btn { background: none; border: 1px solid #555; border-radius: 6px; color: #aaa; padding: 5px 12px; font-size: 12px; cursor: pointer; }
+  .logout-btn:hover { border-color: #999; color: white; }
+  .property-bar {
+    background: white;
+    border-bottom: 3px solid var(--kw-red);
+    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .property-info h2 { font-size: 16px; color: var(--kw-dark); font-weight: 700; }
+  .property-info p  { font-size: 12px; color: var(--kw-gray); margin-top: 1px; }
+  .action-badge {
+    background: #FFF3CD; border: 1px solid #FBBF24;
+    border-radius: 6px; padding: 6px 12px;
+    font-size: 12px; color: #92400E; font-weight: 600;
+    max-width: 400px;
+  }
+  .tabs {
+    background: white;
+    border-bottom: 1px solid var(--kw-border);
+    display: flex; gap: 0;
+    padding: 0 20px;
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    background: none; border: none; border-bottom: 3px solid transparent;
+    padding: 14px 18px; font-size: 14px; font-weight: 600; color: var(--kw-gray);
+    cursor: pointer; transition: all 0.15s; margin-bottom: -1px;
+    display: flex; align-items: center; gap: 7px;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--kw-dark); }
+  .tab-btn.active { color: var(--kw-red); border-bottom-color: var(--kw-red); }
+  .tab-panel { display: none; flex: 1; flex-direction: column; min-height: 0; }
+  .tab-panel.active { display: flex; }
+  .chat-container { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .chat-header { background: white; border-bottom: 1px solid var(--kw-border); padding: 10px 20px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .chat-header-icon { font-size: 20px; }
+  .chat-header h3 { font-size: 14px; color: var(--kw-dark); font-weight: 700; }
+  .chat-header p  { font-size: 12px; color: var(--kw-gray); }
+  .quick-bar {
+    background: #fafafa; border-bottom: 1px solid var(--kw-border);
+    padding: 8px 16px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+    flex-shrink: 0;
+  }
+  .quick-label { font-size: 11px; color: #999; font-weight: 600; white-space: nowrap; }
+  .quick-btn {
+    background: white; border: 1px solid var(--kw-border);
+    border-radius: 16px; padding: 4px 11px; font-size: 12px; color: var(--kw-gray);
+    cursor: pointer; transition: all 0.12s;
+  }
+  .quick-btn:hover { border-color: var(--kw-red); color: var(--kw-red); background: #fff5f5; }
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 16px 20px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .welcome-msg {
+    background: #fff5f5; border: 1px solid #FFCDD2;
+    border-radius: 12px; padding: 16px 18px; max-width: 560px;
+    align-self: flex-start;
+  }
+  .welcome-msg .wm-title { font-weight: 700; color: var(--kw-red); margin-bottom: 6px; font-size: 14px; }
+  .welcome-msg p { font-size: 13px; color: var(--kw-gray); line-height: 1.6; }
+  .msg { display: flex; gap: 8px; max-width: 640px; }
+  .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+  .msg-av {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0; margin-top: 2px;
+  }
+  .msg.bot  .msg-av { background: var(--kw-red); color: white; font-size: 12px; font-weight: 700; }
+  .msg.user .msg-av { background: var(--kw-dark); color: white; font-size: 12px; font-weight: 700; }
+  .msg-bubble {
+    background: white; border: 1px solid var(--kw-border);
+    border-radius: 12px; padding: 10px 14px;
+    font-size: 13.5px; line-height: 1.6; color: var(--kw-dark);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    max-width: calc(100% - 42px);
+  }
+  .msg.user .msg-bubble { background: var(--kw-dark); color: white; border-color: var(--kw-dark); }
+  .msg-bubble strong { color: var(--kw-red); }
+  .msg.user .msg-bubble strong { color: #FF9999; }
+  .msg-bubble ul { margin: 6px 0 4px 16px; }
+  .msg-bubble li { margin-bottom: 3px; }
+  .typing { display: flex; align-items: center; gap: 4px; padding: 4px 0; }
+  .typing span { width: 6px; height: 6px; background: #ccc; border-radius: 50%; animation: bounce 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
+  .chat-input-bar {
+    background: white; border-top: 1px solid var(--kw-border);
+    padding: 12px 16px; display: flex; gap: 8px; align-items: flex-end; flex-shrink: 0;
+  }
+  .chat-input-bar textarea {
+    flex: 1; border: 1.5px solid var(--kw-border); border-radius: 8px;
+    padding: 9px 13px; font-size: 14px; font-family: inherit; resize: none;
+    min-height: 40px; max-height: 100px; outline: none; color: var(--kw-dark); line-height: 1.4;
+  }
+  .chat-input-bar textarea:focus { border-color: var(--kw-red); }
+  .send-btn {
+    background: var(--kw-red); color: white; border: none; border-radius: 8px;
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; transition: background 0.15s;
+  }
+  .send-btn:hover { background: var(--kw-red-dark); }
+  .send-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .send-btn svg { width: 17px; height: 17px; }
+  .chat-disclaimer { font-size: 11px; color: #bbb; text-align: center; padding: 4px 16px 8px; flex-shrink: 0; }
+  .summary-panel { flex: 1; overflow-y: auto; padding: 20px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; max-width: 900px; }
+  .summary-card { background: white; border: 1px solid var(--kw-border); border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .summary-card h3 { font-size: 13px; font-weight: 700; color: var(--kw-red); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .summary-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid #f0f0f0; gap: 10px; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-label { font-size: 12px; color: var(--kw-gray); font-weight: 600; flex-shrink: 0; min-width: 100px; }
+  .summary-value { font-size: 12px; color: var(--kw-dark); text-align: right; }
+  .status-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .status-done    { background: #D1FAE5; color: #065F46; }
+  .status-pending { background: #FEF3C7; color: #92400E; }
+  .status-upcoming{ background: #E0E7FF; color: #3730A3; }
+  .contact-panel { flex: 1; overflow-y: auto; padding: 20px; }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; max-width: 900px; }
+  .contact-card { background: white; border: 1px solid var(--kw-border); border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .contact-av { width: 38px; height: 38px; border-radius: 50%; background: var(--kw-red); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .contact-info .role  { font-size: 11px; color: var(--kw-gray); text-transform: uppercase; font-weight: 700; letter-spacing: 0.4px; }
+  .contact-info .cname { font-size: 14px; font-weight: 700; color: var(--kw-dark); margin: 2px 0; }
+  .contact-info a { font-size: 12px; color: var(--kw-red); text-decoration: none; display: block; }
+  .contact-info a:hover { text-decoration: underline; }
+  .site-footer { background: var(--kw-dark); color: #777; font-size: 12px; text-align: center; padding: 14px; flex-shrink: 0; }
+  .site-footer span { color: var(--kw-red); }
 </style>
 </head>
 <body>
@@ -102,19 +181,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
   <div class="action-badge" id="actionBadge" style="display:none"></div>
 </div>
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('hoa',this)">🏘️ HOA Questions</button>
-  <button class="tab-btn" onclick="switchTab('contract',this)">📄 Contract & Build</button>
-  <button class="tab-btn" onclick="switchTab('summary',this)">📊 My Summary</button>
-  <button class="tab-btn" onclick="switchTab('contacts',this)">📞 My Contacts</button>
+  <button class="tab-btn active" onclick="switchTab('hoa', this)">HOA Questions</button>
+  <button class="tab-btn" onclick="switchTab('contract', this)">Contract and Build</button>
+  <button class="tab-btn" onclick="switchTab('summary', this)">My Summary</button>
+  <button class="tab-btn" onclick="switchTab('contacts', this)">My Contacts</button>
 </div>
 <div class="tab-panel active" id="tab-hoa">
   <div class="chat-container">
-    <div class="chat-header"><div style="font-size:20px">🏘️</div><div><h3>HOA Questions</h3><p>Ask anything about your community rules</p></div></div>
+    <div class="chat-header"><div class="chat-header-icon">H</div><div><h3>HOA Questions</h3><p>Ask anything about your community rules</p></div></div>
     <div class="quick-bar">
       <span class="quick-label">Try:</span>
       <button class="quick-btn" onclick="askHOA('Can I have a bird feeder outside?')">Bird feeders?</button>
       <button class="quick-btn" onclick="askHOA('What are the pet rules?')">Pet rules?</button>
-      <button class="quick-btn" onclick="askHOA('Can I put up a Ring doorbell camera?')">Doorbell cam?</button>
+      <button class="quick-btn" onclick="askHOA('Can I put up a Ring doorbell camera?')">Doorbell camera?</button>
       <button class="quick-btn" onclick="askHOA('Can I install a hot tub?')">Hot tub?</button>
       <button class="quick-btn" onclick="askHOA('What color do my window blinds need to be?')">Window coverings?</button>
       <button class="quick-btn" onclick="askHOA('When do I put my trash out?')">Trash rules?</button>
@@ -122,18 +201,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
       <button class="quick-btn" onclick="askHOA('How do I rent the clubhouse?')">Clubhouse?</button>
     </div>
     <div class="chat-messages" id="hoa-messages">
-      <div class="welcome-msg"><div class="wm-title">👋 Hi there! I know your HOA rules.</div><p>Ask me anything about your community. I will give you a plain-English answer based on your actual HOA document.</p></div>
+      <div class="welcome-msg"><div class="wm-title">Hi there! I know your HOA rules.</div><p>Ask me anything about your community. I will give you a plain-English answer based on your actual HOA document.</p></div>
     </div>
     <div class="chat-input-bar">
       <textarea id="hoa-input" placeholder="Ask about your HOA rules..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat('hoa')}" oninput="autoResize(this)"></textarea>
       <button class="send-btn" id="hoa-send" onclick="sendChat('hoa')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
-    <div class="chat-disclaimer">Based on your HOA document. Verify official rulings with your HOA board.</div>
+    <div class="chat-disclaimer">Answers based on your HOA document. Always verify official rulings with your HOA board.</div>
   </div>
 </div>
 <div class="tab-panel" id="tab-contract">
   <div class="chat-container">
-    <div class="chat-header"><div style="font-size:20px">📄</div><div><h3>Contract & Build Questions</h3><p>Ask about your contract, design selections, timeline, and next steps</p></div></div>
+    <div class="chat-header"><div class="chat-header-icon">C</div><div><h3>Contract and Build Questions</h3><p>Ask about your contract, design selections, timeline, and next steps</p></div></div>
     <div class="quick-bar">
       <span class="quick-label">Try:</span>
       <button class="quick-btn" onclick="askContract('When is my closing date?')">Closing date?</button>
@@ -144,7 +223,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
       <button class="quick-btn" onclick="askContract('What are my next steps?')">Next steps?</button>
     </div>
     <div class="chat-messages" id="contract-messages">
-      <div class="welcome-msg"><div class="wm-title">📄 Your contract and build details</div><p>Ask me about your design selections, timeline, warranties, or anything from your purchase contract.</p></div>
+      <div class="welcome-msg"><div class="wm-title">Your contract and build details</div><p>Ask me about your design selections, timeline, warranties, or anything from your purchase contract.</p></div>
     </div>
     <div class="chat-input-bar">
       <textarea id="contract-input" placeholder="Ask about your contract or build..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat('contract')}" oninput="autoResize(this)"></textarea>
@@ -159,96 +238,150 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 <div class="tab-panel" id="tab-contacts">
   <div class="contact-panel"><div class="contact-grid" id="contactGrid"></div></div>
 </div>
-<footer class="site-footer">© 2026 Schuyler Realty &nbsp;·&nbsp; <span>Keller Williams</span> Consultants Realty &nbsp;·&nbsp; Grove City, OH</footer>
+<footer class="site-footer">2026 Schuyler Realty - <span>Keller Williams</span> Consultants Realty - Grove City, OH</footer>
 <script src="clients-config.js"></script>
 <script>
-const code=sessionStorage.getItem('sr_client');
-const client=CLIENTS[code];
-if(!client){window.location.href='index.html';}
-document.getElementById('clientBadge').textContent='👋 '+client.name;
-document.getElementById('propAddress').textContent=client.property+' · '+client.community;
-document.getElementById('propDetails').textContent=client.city+' · Builder: '+client.builder+' · Closing: '+client.closing_window;
-document.title=client.name+"'s Portal — Schuyler Realty";
-if(client.action_item){const ab=document.getElementById('actionBadge');ab.textContent=client.action_item;ab.style.display='block';}
-document.getElementById('summaryGrid').innerHTML=`
-<div class="summary-card"><h3>🏠 Your Property</h3>
-<div class="summary-row"><span class="summary-label">Address</span><span class="summary-value">${client.property}</span></div>
-<div class="summary-row"><span class="summary-label">Community</span><span class="summary-value">${client.community}</span></div>
-<div class="summary-row"><span class="summary-label">City</span><span class="summary-value">${client.city}</span></div>
-<div class="summary-row"><span class="summary-label">Builder</span><span class="summary-value">${client.builder}</span></div>
-<div class="summary-row"><span class="summary-label">Closing</span><span class="summary-value">${client.closing_window}</span></div>
-</div>
-<div class="summary-card"><h3>📅 Build Milestones</h3>
-<div class="summary-row"><span class="summary-label">Contract Signed</span><span class="summary-value"><span class="status-badge status-done">Complete</span></span></div>
-<div class="summary-row"><span class="summary-label">Design Studio</span><span class="summary-value"><span class="status-badge status-done">Complete</span></span></div>
-<div class="summary-row"><span class="summary-label">Pre-Con Meeting</span><span class="summary-value"><span class="status-badge status-done">Complete</span></span></div>
-<div class="summary-row"><span class="summary-label">Guardian Addendum</span><span class="summary-value"><span class="status-badge status-done">Complete</span></span></div>
-<div class="summary-row"><span class="summary-label">Pre-Drywall</span><span class="summary-value"><span class="status-badge status-upcoming">End of July</span></span></div>
-<div class="summary-row"><span class="summary-label">Closing</span><span class="summary-value"><span class="status-badge status-upcoming">Sept 19-29</span></span></div>
-</div>
-<div class="summary-card"><h3>📋 Quick HOA Rules</h3>
-<div class="summary-row"><span class="summary-label">Window Coverings</span><span class="summary-value">White, off-white, beige, or light gray — exterior side</span></div>
-<div class="summary-row"><span class="summary-label">Pets</span><span class="summary-value">Max 2 dogs or cats · Leash max 8 ft</span></div>
-<div class="summary-row"><span class="summary-label">Trash Out</span><span class="summary-value">After 5 PM prior day · In by 9 PM collection day</span></div>
-<div class="summary-row"><span class="summary-label">Pool Guests</span><span class="summary-value">Max 3 · Must be with a resident</span></div>
-<div class="summary-row"><span class="summary-label">Exterior Changes</span><span class="summary-value">Any change needs Board approval first</span></div>
-<div class="summary-row"><span class="summary-label">Parking Overnight</span><span class="summary-value">No boats, trailers, motorhomes, or commercial vehicles</span></div>
-</div>
-<div class="summary-card"><h3>🔑 Your Agent</h3>
-<div class="summary-row"><span class="summary-label">Agent</span><span class="summary-value">Mark Schuyler</span></div>
-<div class="summary-row"><span class="summary-label">Brokerage</span><span class="summary-value">Keller Williams Consultants Realty</span></div>
-<div class="summary-row"><span class="summary-label">Email</span><span class="summary-value">markschuyler@kw.com</span></div>
-<div class="summary-row"><span class="summary-label">Note</span><span class="summary-value">${client.agent_note}</span></div>
-</div>`;
-const contacts=[
-  {role:"Your Agent",name:"Mark Schuyler",phone:"",email:"markschuyler@kw.com",i:"MS"},
-  {role:"Sales Consultant",name:"Jennifer Scheel-Patton",phone:"(614) 601-0191",email:"jscheel@epconcommunities.com",i:"JS"},
-  {role:"Superintendent",name:"Eric Gordon",phone:"",email:"egordon@epconcommunities.com",i:"EG"},
-  {role:"Contracts Coord.",name:"Donna Kobella",phone:"(614) 652-3570",email:"dkobella@epconcommunities.com",i:"DK"},
-  {role:"Design Consultant",name:"Kelli Joyce",phone:"(614) 784-3259",email:"kjoyce@epconcommunities.com",i:"KJ"},
-  {role:"Title Company",name:"Unity Title",phone:"",email:"bmorgan@unitytitle.net",i:"UT"}
+var code = sessionStorage.getItem('sr_client');
+var client = CLIENTS[code];
+if (!client) { window.location.href = 'index.html'; }
+document.getElementById('clientBadge').textContent = 'Hi ' + client.name;
+document.getElementById('propAddress').textContent = client.property + ' - ' + client.community;
+document.getElementById('propDetails').textContent = client.city + ' - Builder: ' + client.builder + ' - Closing: ' + client.closing_window;
+document.title = client.name + "'s Portal - Schuyler Realty";
+if (client.action_item) {
+  var ab = document.getElementById('actionBadge');
+  ab.textContent = client.action_item;
+  ab.style.display = 'block';
+}
+var milestonesHTML = '';
+var milestones = client.milestones || [];
+for (var i = 0; i < milestones.length; i++) {
+  var m = milestones[i];
+  var cls = m.status === 'done' ? 'status-done' : m.status === 'pending' ? 'status-pending' : 'status-upcoming';
+  var icon = m.status === 'done' ? 'Complete' : m.status === 'pending' ? 'Action Needed' : m.date;
+  milestonesHTML += '<div class="summary-row"><span class="summary-label">' + m.name + '</span><span class="summary-value"><span class="status-badge ' + cls + '">' + icon + '</span></span></div>';
+}
+document.getElementById('summaryGrid').innerHTML =
+  '<div class="summary-card"><h3>Your Property</h3>' +
+  '<div class="summary-row"><span class="summary-label">Address</span><span class="summary-value">' + client.property + '</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Community</span><span class="summary-value">' + client.community + '</span></div>' +
+  '<div class="summary-row"><span class="summary-label">City</span><span class="summary-value">' + client.city + '</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Builder</span><span class="summary-value">' + client.builder + '</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Closing</span><span class="summary-value">' + client.closing_window + '</span></div>' +
+  '</div>' +
+  '<div class="summary-card"><h3>Build Milestones</h3>' + milestonesHTML + '</div>' +
+  '<div class="summary-card"><h3>Quick HOA Rules</h3>' +
+  '<div class="summary-row"><span class="summary-label">Window Coverings</span><span class="summary-value">White, off-white, beige, or light gray on exterior</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Pets</span><span class="summary-value">Max 2 dogs or cats - Leash max 8 ft</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Trash Out</span><span class="summary-value">After 5 PM prior day - In by 9 PM collection day</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Pool Guests</span><span class="summary-value">Max 3 - Must be with a resident</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Exterior Changes</span><span class="summary-value">Any change needs Board approval first</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Parking Overnight</span><span class="summary-value">No boats, trailers, motorhomes, or commercial vehicles</span></div>' +
+  '</div>' +
+  '<div class="summary-card"><h3>Your Agent</h3>' +
+  '<div class="summary-row"><span class="summary-label">Agent</span><span class="summary-value">Mark Schuyler</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Brokerage</span><span class="summary-value">Keller Williams Consultants Realty</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Email</span><span class="summary-value">markschuyler@kw.com</span></div>' +
+  '<div class="summary-row"><span class="summary-label">Note</span><span class="summary-value">' + client.agent_note + '</span></div>' +
+  '</div>';
+var contacts = [
+  { role: "Your Agent", name: "Mark Schuyler", phone: "(740) 953-1769", email: "markschuyler@kw.com", initials: "MS" },
+  { role: "Sales Consultant", name: "Jennifer Scheel-Patton", phone: "(614) 601-0191", email: "jscheel@epconcommunities.com", initials: "JS" },
+  { role: "Superintendent", name: "Eric Gordon", phone: "", email: "egordon@epconcommunities.com", initials: "EG" },
+  { role: "Contracts Coord.", name: "Donna Kobella", phone: "(614) 652-3570", email: "dkobella@epconcommunities.com", initials: "DK" },
+  { role: "Design Consultant", name: "Kelli Joyce", phone: "(614) 784-3259", email: "kjoyce@epconcommunities.com", initials: "KJ" },
+  { role: "Title Company", name: "Unity Title", phone: "", email: "bmorgan@unitytitle.net", initials: "UT" }
 ];
-document.getElementById('contactGrid').innerHTML=contacts.map(c=>`<div class="contact-card"><div class="contact-av">${c.i}</div><div class="contact-info"><div class="role">${c.role}</div><div class="cname">${c.name}</div>${c.phone?'<a href="tel:'+c.phone+'">'+c.phone+'</a>':''}<a href="mailto:${c.email}">${c.email}</a></div></div>`).join('');
-function switchTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');}
-const loading={hoa:false,contract:false};
-function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
-function askHOA(q){document.getElementById('hoa-input').value=q;sendChat('hoa');}
-function askContract(q){document.getElementById('contract-input').value=q;sendChat('contract');}
-function addMsg(area,text,type){
-  const box=document.getElementById(area+'-messages');
-  const msg=document.createElement('div');msg.className='msg '+type;
-  const av=document.createElement('div');av.className='msg-av';av.textContent=type==='bot'?'SR':client.name.charAt(0);
-  const bub=document.createElement('div');bub.className='msg-bubble';
-  if(type==='bot'){bub.innerHTML=text.replace(/**(.+?)**/g,'<strong>$1</strong>').replace(/\n- /g,'<br>• ').replace(/\n/g,'<br>');}
-  else{bub.textContent=text;}
-  msg.appendChild(av);msg.appendChild(bub);box.appendChild(msg);box.scrollTop=box.scrollHeight;
+var contactHTML = '';
+for (var j = 0; j < contacts.length; j++) {
+  var c = contacts[j];
+  contactHTML += '<div class="contact-card"><div class="contact-av">' + c.initials + '</div><div class="contact-info"><div class="role">' + c.role + '</div><div class="cname">' + c.name + '</div>';
+  if (c.phone) { contactHTML += '<a href="tel:' + c.phone + '">' + c.phone + '</a>'; }
+  contactHTML += '<a href="mailto:' + c.email + '">' + c.email + '</a></div></div>';
 }
-function addTyping(area){
-  const box=document.getElementById(area+'-messages');
-  const t=document.createElement('div');t.className='msg bot';t.id=area+'-typing';
-  t.innerHTML='<div class="msg-av">SR</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
-  box.appendChild(t);box.scrollTop=box.scrollHeight;
+document.getElementById('contactGrid').innerHTML = contactHTML;
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
 }
-async function sendChat(area){
-  if(loading[area])return;
-  const inp=document.getElementById(area+'-input');
-  const q=inp.value.trim();if(!q)return;
-  loading[area]=true;document.getElementById(area+'-send').disabled=true;
-  inp.value='';inp.style.height='auto';
-  const wm=document.querySelector('#'+area+'-messages .welcome-msg');if(wm)wm.remove();
-  addMsg(area,q,'user');addTyping(area);
-  const sys=area==='hoa'
-    ?'You are an HOA assistant for '+client.community+' in '+client.city+'. Help '+client.name+' understand their community rules. HOA Rules:\n\n'+client.hoa_rules+'\n\nAnswer clearly in plain English. Cite the specific section. If Board approval is needed, say so. Be concise and friendly.'
-    :'You are a real estate assistant helping '+client.name+' with their new home at '+client.property+', '+client.city+'. Contract details:\n\n'+client.contract_notes+'\n\nAnswer clearly and helpfully. Be specific about their selections. Keep answers concise.';
-  try{
-    const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:sys,messages:[{role:'user',content:q}]})});
-    const data=await res.json();
-    document.getElementById(area+'-typing')?.remove();
-    addMsg(area,data.content||'Sorry, I could not get an answer. Please try again.','bot');
-  }catch(e){document.getElementById(area+'-typing')?.remove();addMsg(area,'Something went wrong. Please try again.','bot');}
-  loading[area]=false;document.getElementById(area+'-send').disabled=false;
+var loading = { hoa: false, contract: false };
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
 }
-function logout(){sessionStorage.removeItem('sr_client');window.location.href='index.html';}
+function askHOA(q) { document.getElementById('hoa-input').value = q; sendChat('hoa'); }
+function askContract(q) { document.getElementById('contract-input').value = q; sendChat('contract'); }
+function addMsg(area, text, type) {
+  var box = document.getElementById(area + '-messages');
+  var msg = document.createElement('div');
+  msg.className = 'msg ' + type;
+  var av = document.createElement('div');
+  av.className = 'msg-av';
+  av.textContent = type === 'bot' ? 'SR' : client.name.charAt(0);
+  var bub = document.createElement('div');
+  bub.className = 'msg-bubble';
+  if (type === 'bot') {
+    bub.innerHTML = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n- /g, '<br>- ').replace(/\n/g, '<br>');
+  } else {
+    bub.textContent = text;
+  }
+  msg.appendChild(av);
+  msg.appendChild(bub);
+  box.appendChild(msg);
+  box.scrollTop = box.scrollHeight;
+  return msg;
+}
+function addTyping(area) {
+  var box = document.getElementById(area + '-messages');
+  var t = document.createElement('div');
+  t.className = 'msg bot';
+  t.id = area + '-typing';
+  t.innerHTML = '<div class="msg-av">SR</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+  box.appendChild(t);
+  box.scrollTop = box.scrollHeight;
+}
+function sendChat(area) {
+  if (loading[area]) return;
+  var inp = document.getElementById(area + '-input');
+  var q = inp.value.trim();
+  if (!q) return;
+  loading[area] = true;
+  document.getElementById(area + '-send').disabled = true;
+  inp.value = '';
+  inp.style.height = 'auto';
+  var wm = document.querySelector('#' + area + '-messages .welcome-msg');
+  if (wm) wm.remove();
+  addMsg(area, q, 'user');
+  addTyping(area);
+  var systemPrompt = area === 'hoa'
+    ? 'You are an HOA assistant for ' + client.community + ' in ' + client.city + '. You are helping ' + client.name + ' understand their community rules. Here are the complete HOA policies:\n\n' + client.hoa_rules + '\n\nAnswer questions clearly in plain English. Cite the specific section that applies. If something requires Board approval, say so. Keep answers concise.'
+    : 'You are a real estate assistant helping ' + client.name + ' with their new home at ' + client.property + ', ' + client.city + '. Here are their contract details:\n\n' + client.contract_notes + '\n\nAnswer clearly and helpfully. Be specific about their selections. Keep answers concise.';
+  fetch('/.netlify/functions/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ system: systemPrompt, messages: [{ role: 'user', content: q }] })
+  }).then(function(res) {
+    return res.json();
+  }).then(function(data) {
+    var t = document.getElementById(area + '-typing');
+    if (t) t.remove();
+    addMsg(area, data.content || 'Sorry, I could not get an answer. Please try again.', 'bot');
+    loading[area] = false;
+    document.getElementById(area + '-send').disabled = false;
+  }).catch(function(e) {
+    var t = document.getElementById(area + '-typing');
+    if (t) t.remove();
+    addMsg(area, 'Something went wrong. Please try again in a moment.', 'bot');
+    loading[area] = false;
+    document.getElementById(area + '-send').disabled = false;
+  });
+}
+function logout() {
+  sessionStorage.removeItem('sr_client');
+  window.location.href = 'index.html';
+}
 </script>
 </body>
 </html>

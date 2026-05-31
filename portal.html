@@ -5,97 +5,104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Portal - Schuyler Realty</title>
 <style>
-  :root { --kw-red:#CC0000;--kw-red-dark:#A30000;--kw-dark:#1a1a1a;--kw-gray:#4a4a4a;--kw-light:#f7f7f7;--kw-border:#e0e0e0;color-scheme:light; }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--kw-light);min-height:100vh;display:flex;flex-direction:column}
-  .site-header{background:var(--kw-dark);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;flex-shrink:0}
-  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .logo-mark{width:32px;height:32px;background:var(--kw-red);border-radius:5px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:16px}
-  .logo-text .brand{color:white;font-size:15px;font-weight:700;display:block}
-  .logo-text .sub{color:#888;font-size:11px}
-  .header-right{display:flex;align-items:center;gap:16px}
-  .client-badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 12px;color:white;font-size:12px}
-  .logout-btn{background:none;border:1px solid #555;border-radius:6px;color:#aaa;padding:5px 12px;font-size:12px;cursor:pointer}
-  .logout-btn:hover{border-color:#999;color:white}
-  .property-bar{background:white;border-bottom:3px solid var(--kw-red);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-  .property-info h2{font-size:16px;color:var(--kw-dark);font-weight:700}
-  .property-info p{font-size:12px;color:var(--kw-gray);margin-top:1px}
-  .action-badge{background:#FFF3CD;border:1px solid #FBBF24;border-radius:6px;padding:6px 12px;font-size:12px;color:#92400E;font-weight:600;max-width:400px}
-  .tabs{background:white;border-bottom:1px solid var(--kw-border);display:flex;padding:0 12px;flex-shrink:0;overflow-x:auto}
-  .tab-btn{background:none;border:none;border-bottom:3px solid transparent;padding:14px 14px;font-size:13px;font-weight:600;color:var(--kw-gray);cursor:pointer;margin-bottom:-1px;white-space:nowrap}
-  .tab-btn:hover{color:var(--kw-dark)}
-  .tab-btn.active{color:var(--kw-red);border-bottom-color:var(--kw-red)}
-  .tab-panel{display:none;flex:1;flex-direction:column;min-height:0}
-  .tab-panel.active{display:flex}
-  .chat-container{display:flex;flex-direction:column;flex:1;min-height:0}
-  .chat-header{background:white;border-bottom:1px solid var(--kw-border);padding:10px 20px;display:flex;align-items:center;gap:10px;flex-shrink:0}
-  .chat-header-icon{font-size:20px}
-  .chat-header h3{font-size:14px;color:var(--kw-dark);font-weight:700}
-  .chat-header p{font-size:12px;color:var(--kw-gray)}
-  .quick-bar{background:#fafafa;border-bottom:1px solid var(--kw-border);padding:8px 16px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex-shrink:0}
-  .quick-label{font-size:11px;color:#999;font-weight:600;white-space:nowrap}
-  .quick-btn{background:white;border:1px solid var(--kw-border);border-radius:16px;padding:4px 11px;font-size:12px;color:var(--kw-gray);cursor:pointer}
-  .quick-btn:hover{border-color:var(--kw-red);color:var(--kw-red);background:#fff5f5}
-  .chat-messages{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
-  .welcome-msg{background:#fff5f5;border:1px solid #FFCDD2;border-radius:12px;padding:16px 18px;max-width:560px}
-  .welcome-msg .wm-title{font-weight:700;color:var(--kw-red);margin-bottom:6px;font-size:14px}
-  .welcome-msg p{font-size:13px;color:var(--kw-gray);line-height:1.6}
-  .msg{display:flex;gap:8px;max-width:640px}
-  .msg.user{align-self:flex-end;flex-direction:row-reverse}
-  .msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
-  .msg.bot .msg-av{background:var(--kw-red);color:white}
-  .msg.user .msg-av{background:var(--kw-dark);color:white}
-  .msg-bubble{background:white;border:1px solid var(--kw-border);border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.6;color:var(--kw-dark);max-width:calc(100% - 42px)}
-  .msg.user .msg-bubble{background:var(--kw-dark);color:white;border-color:var(--kw-dark)}
-  .msg-bubble strong{color:var(--kw-red)}
-  .msg.user .msg-bubble strong{color:#FF9999}
-  .typing{display:flex;align-items:center;gap:4px;padding:4px 0}
-  .typing span{width:6px;height:6px;background:#ccc;border-radius:50%;animation:bounce 1.2s infinite}
-  .typing span:nth-child(2){animation-delay:0.2s}
-  .typing span:nth-child(3){animation-delay:0.4s}
-  @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-  .chat-input-bar{background:white;border-top:1px solid var(--kw-border);padding:12px 16px;display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
-  .chat-input-bar textarea{flex:1;border:1.5px solid var(--kw-border);border-radius:8px;padding:9px 13px;font-size:14px;font-family:inherit;resize:none;min-height:40px;max-height:100px;outline:none;color:var(--kw-dark)}
-  .chat-input-bar textarea:focus{border-color:var(--kw-red)}
-  .send-btn{background:var(--kw-red);color:white;border:none;border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
-  .send-btn:hover{background:var(--kw-red-dark)}
-  .send-btn:disabled{background:#ccc;cursor:not-allowed}
-  .send-btn svg{width:17px;height:17px}
-  .chat-disclaimer{font-size:11px;color:#bbb;text-align:center;padding:4px 16px 8px;flex-shrink:0}
-  .summary-panel{flex:1;overflow-y:auto;padding:20px}
-  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;max-width:900px}
-  .summary-card{background:white;border:1px solid var(--kw-border);border-radius:12px;padding:18px}
-  .summary-card h3{font-size:13px;font-weight:700;color:var(--kw-red);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
-  .summary-row{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0f0f0;gap:10px}
-  .summary-row:last-child{border-bottom:none}
-  .summary-label{font-size:12px;color:var(--kw-gray);font-weight:600;flex-shrink:0;min-width:100px}
-  .summary-value{font-size:12px;color:var(--kw-dark);text-align:right}
-  .status-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
-  .status-done{background:#D1FAE5;color:#065F46}
-  .status-pending{background:#FEF3C7;color:#92400E}
-  .status-upcoming{background:#E0E7FF;color:#3730A3}
-  .contact-panel{flex:1;overflow-y:auto;padding:20px}
-  .contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-width:900px}
-  .contact-card{background:white;border:1px solid var(--kw-border);border-radius:10px;padding:16px;display:flex;gap:12px}
-  .contact-av{width:38px;height:38px;border-radius:50%;background:var(--kw-red);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-  .contact-info .role{font-size:11px;color:var(--kw-gray);text-transform:uppercase;font-weight:700}
-  .contact-info .cname{font-size:14px;font-weight:700;color:var(--kw-dark);margin:2px 0}
-  .contact-info a{font-size:12px;color:var(--kw-red);text-decoration:none;display:block}
-  .design-panel{flex:1;overflow-y:auto;padding:20px}
-  .design-section{max-width:900px;margin-bottom:28px}
-  .design-section-title{font-size:13px;font-weight:700;color:var(--kw-red);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--kw-red)}
-  .design-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-  .design-card{background:white;border:1px solid var(--kw-border);border-radius:10px;overflow:hidden}
-  .design-swatch{height:80px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-align:center;padding:4px}
-  .design-icon{height:80px;display:flex;align-items:center;justify-content:center;background:#f8f8f8;font-size:32px}
-  .design-card-body{padding:12px}
-  .design-card-name{font-size:13px;font-weight:700;color:var(--kw-dark);margin-bottom:3px}
-  .design-card-room{font-size:11px;color:var(--kw-red);font-weight:600;margin-bottom:6px}
-  .design-card-desc{font-size:11px;color:var(--kw-gray);margin-bottom:8px;line-height:1.4}
-  .view-btn{display:inline-block;background:var(--kw-red);color:white;border-radius:5px;padding:5px 10px;font-size:11px;font-weight:700;text-decoration:none}
-  .view-btn:hover{background:var(--kw-red-dark)}
-  .site-footer{background:var(--kw-dark);color:#777;font-size:12px;text-align:center;padding:14px;flex-shrink:0}
-  .site-footer span{color:var(--kw-red)}
+:root{--kw-red:#CC0000;--kw-red-dark:#A30000;--kw-dark:#1a1a1a;--kw-gray:#4a4a4a;--kw-light:#f7f7f7;--kw-border:#e0e0e0;color-scheme:light}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--kw-light);min-height:100vh;display:flex;flex-direction:column}
+.site-header{background:var(--kw-dark);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:32px;height:32px;background:var(--kw-red);border-radius:5px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:16px}
+.logo-text .brand{color:white;font-size:15px;font-weight:700;display:block}
+.logo-text .sub{color:#888;font-size:11px}
+.header-right{display:flex;align-items:center;gap:16px}
+.client-badge{background:rgba(255,255,255,0.1);border-radius:20px;padding:4px 12px;color:white;font-size:12px}
+.logout-btn{background:none;border:1px solid #555;border-radius:6px;color:#aaa;padding:5px 12px;font-size:12px;cursor:pointer}
+.logout-btn:hover{border-color:#999;color:white}
+.property-bar{background:white;border-bottom:3px solid var(--kw-red);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.property-info h2{font-size:16px;color:var(--kw-dark);font-weight:700}
+.property-info p{font-size:12px;color:var(--kw-gray);margin-top:1px}
+.action-badge{background:#FFF3CD;border:1px solid #FBBF24;border-radius:6px;padding:6px 12px;font-size:12px;color:#92400E;font-weight:600;max-width:500px}
+.tabs{background:white;border-bottom:1px solid var(--kw-border);display:flex;padding:0 12px;flex-shrink:0;overflow-x:auto}
+.tab-btn{background:none;border:none;border-bottom:3px solid transparent;padding:14px 14px;font-size:13px;font-weight:600;color:var(--kw-gray);cursor:pointer;margin-bottom:-1px;white-space:nowrap}
+.tab-btn:hover{color:var(--kw-dark)}
+.tab-btn.active{color:var(--kw-red);border-bottom-color:var(--kw-red)}
+.tab-panel{display:none;flex:1;flex-direction:column;min-height:0}
+.tab-panel.active{display:flex}
+.chat-container{display:flex;flex-direction:column;flex:1;min-height:0}
+.chat-header{background:white;border-bottom:1px solid var(--kw-border);padding:10px 20px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chat-header h3{font-size:14px;color:var(--kw-dark);font-weight:700}
+.chat-header p{font-size:12px;color:var(--kw-gray)}
+.quick-bar{background:#fafafa;border-bottom:1px solid var(--kw-border);padding:8px 16px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex-shrink:0}
+.quick-label{font-size:11px;color:#999;font-weight:600;white-space:nowrap}
+.quick-btn{background:white;border:1px solid var(--kw-border);border-radius:16px;padding:4px 11px;font-size:12px;color:var(--kw-gray);cursor:pointer}
+.quick-btn:hover{border-color:var(--kw-red);color:var(--kw-red);background:#fff5f5}
+.chat-messages{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.welcome-msg{background:#fff5f5;border:1px solid #FFCDD2;border-radius:12px;padding:16px 18px;max-width:560px}
+.welcome-msg .wm-title{font-weight:700;color:var(--kw-red);margin-bottom:6px;font-size:14px}
+.welcome-msg p{font-size:13px;color:var(--kw-gray);line-height:1.6}
+.msg{display:flex;gap:8px;max-width:640px}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+.msg.bot .msg-av{background:var(--kw-red);color:white}
+.msg.user .msg-av{background:var(--kw-dark);color:white}
+.msg-bubble{background:white;border:1px solid var(--kw-border);border-radius:12px;padding:10px 14px;font-size:13.5px;line-height:1.6;color:var(--kw-dark);max-width:calc(100% - 42px)}
+.msg.user .msg-bubble{background:var(--kw-dark);color:white;border-color:var(--kw-dark)}
+.msg-bubble strong{color:var(--kw-red)}
+.typing{display:flex;align-items:center;gap:4px;padding:4px 0}
+.typing span{width:6px;height:6px;background:#ccc;border-radius:50%;animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:0.2s}
+.typing span:nth-child(3){animation-delay:0.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.chat-input-bar{background:white;border-top:1px solid var(--kw-border);padding:12px 16px;display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
+.chat-input-bar textarea{flex:1;border:1.5px solid var(--kw-border);border-radius:8px;padding:9px 13px;font-size:14px;font-family:inherit;resize:none;min-height:40px;max-height:100px;outline:none;color:var(--kw-dark)}
+.chat-input-bar textarea:focus{border-color:var(--kw-red)}
+.send-btn{background:var(--kw-red);color:white;border:none;border-radius:8px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.send-btn:hover{background:var(--kw-red-dark)}
+.send-btn:disabled{background:#ccc;cursor:not-allowed}
+.send-btn svg{width:17px;height:17px}
+.chat-disclaimer{font-size:11px;color:#bbb;text-align:center;padding:4px 16px 8px;flex-shrink:0}
+.scroll-panel{flex:1;overflow-y:auto;padding:20px}
+.panel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;max-width:900px}
+.card{background:white;border:1px solid var(--kw-border);border-radius:12px;padding:18px}
+.card h3{font-size:13px;font-weight:700;color:var(--kw-red);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
+.row{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0f0f0;gap:10px}
+.row:last-child{border-bottom:none}
+.rl{font-size:12px;color:var(--kw-gray);font-weight:600;flex-shrink:0;min-width:110px}
+.rv{font-size:12px;color:var(--kw-dark);text-align:right}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
+.b-done{background:#D1FAE5;color:#065F46}
+.b-pending{background:#FEF3C7;color:#92400E}
+.b-upcoming{background:#E0E7FF;color:#3730A3}
+.b-ready{background:#DBEAFE;color:#1E40AF}
+.b-signed{background:#D1FAE5;color:#065F46}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-width:900px}
+.contact-card{background:white;border:1px solid var(--kw-border);border-radius:10px;padding:16px;display:flex;gap:12px}
+.cav{width:38px;height:38px;border-radius:50%;background:var(--kw-red);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.ci .role{font-size:11px;color:var(--kw-gray);text-transform:uppercase;font-weight:700}
+.ci .cname{font-size:14px;font-weight:700;color:var(--kw-dark);margin:2px 0}
+.ci a{font-size:12px;color:var(--kw-red);text-decoration:none;display:block}
+.design-section{max-width:900px;margin-bottom:28px}
+.design-section-title{font-size:13px;font-weight:700;color:var(--kw-red);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--kw-red)}
+.design-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.design-card{background:white;border:1px solid var(--kw-border);border-radius:10px;overflow:hidden}
+.design-swatch{height:80px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;text-align:center;padding:4px}
+.design-icon{height:80px;display:flex;align-items:center;justify-content:center;background:#f8f8f8;font-size:13px;font-weight:600;color:var(--kw-gray)}
+.dcb{padding:12px}
+.dcb .dn{font-size:13px;font-weight:700;color:var(--kw-dark);margin-bottom:3px}
+.dcb .dr{font-size:11px;color:var(--kw-red);font-weight:600;margin-bottom:6px}
+.dcb .dd{font-size:11px;color:var(--kw-gray);margin-bottom:8px;line-height:1.4}
+.view-btn{display:inline-block;background:var(--kw-red);color:white;border-radius:5px;padding:5px 10px;font-size:11px;font-weight:700;text-decoration:none}
+.view-btn:hover{background:var(--kw-red-dark)}
+.info-note{font-size:11px;color:#888;font-style:italic}
+.market-stat{text-align:center;padding:16px 8px}
+.market-stat .num{font-size:28px;font-weight:900;color:var(--kw-red)}
+.market-stat .lbl{font-size:11px;color:var(--kw-gray);text-transform:uppercase;font-weight:600;margin-top:4px}
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:16px}
+.net-total{background:var(--kw-red);color:white;border-radius:10px;padding:16px;text-align:center;margin-top:8px}
+.net-total .nt-label{font-size:12px;opacity:0.85;margin-bottom:4px}
+.net-total .nt-amount{font-size:28px;font-weight:900}
+.kw-badge{background:#E0E7FF;color:#3730A3;border-radius:6px;padding:8px 12px;font-size:12px;margin-top:12px}
+.site-footer{background:var(--kw-dark);color:#777;font-size:12px;text-align:center;padding:14px;flex-shrink:0}
+.site-footer span{color:var(--kw-red)}
 </style>
 </head>
 <body>
@@ -107,399 +114,188 @@
   <div class="property-info"><h2 id="propAddress">Loading...</h2><p id="propDetails">...</p></div>
   <div class="action-badge" id="actionBadge" style="display:none"></div>
 </div>
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('hoa',this)">HOA Questions</button>
-  <button class="tab-btn" onclick="switchTab('contract',this)">Contract and Build</button>
-  <button class="tab-btn" onclick="switchTab('design',this)">My Design Selections</button>
-  <button class="tab-btn" onclick="switchTab('summary',this)">My Summary</button>
-  <button class="tab-btn" onclick="switchTab('contacts',this)">My Contacts</button>
-</div>
-
-<div class="tab-panel active" id="tab-hoa">
-  <div class="chat-container">
-    <div class="chat-header"><div class="chat-header-icon">H</div><div><h3>HOA Questions</h3><p>Ask anything about your community rules</p></div></div>
-    <div class="quick-bar">
-      <span class="quick-label">Try:</span>
-      <button class="quick-btn" onclick="askHOA('Can I have a bird feeder outside?')">Bird feeders?</button>
-      <button class="quick-btn" onclick="askHOA('What are the pet rules?')">Pet rules?</button>
-      <button class="quick-btn" onclick="askHOA('Can I put up a Ring doorbell camera?')">Doorbell camera?</button>
-      <button class="quick-btn" onclick="askHOA('Can I install a hot tub?')">Hot tub?</button>
-      <button class="quick-btn" onclick="askHOA('What color do my window blinds need to be?')">Window coverings?</button>
-      <button class="quick-btn" onclick="askHOA('When do I put my trash out?')">Trash rules?</button>
-      <button class="quick-btn" onclick="askHOA('Can I park my boat overnight?')">Parking?</button>
-      <button class="quick-btn" onclick="askHOA('How do I rent the clubhouse?')">Clubhouse?</button>
-    </div>
-    <div class="chat-messages" id="hoa-messages"><div class="welcome-msg"><div class="wm-title">Hi there! I know your HOA rules.</div><p>Ask me anything about your community. I will give you a plain-English answer based on your actual HOA document.</p></div></div>
-    <div class="chat-input-bar">
-      <textarea id="hoa-input" placeholder="Ask about your HOA rules..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat('hoa')}" oninput="autoResize(this)"></textarea>
-      <button class="send-btn" id="hoa-send" onclick="sendChat('hoa')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-    </div>
-    <div class="chat-disclaimer">Answers based on your HOA document. Always verify official rulings with your HOA board.</div>
-  </div>
-</div>
-
-<div class="tab-panel" id="tab-contract">
-  <div class="chat-container">
-    <div class="chat-header"><div class="chat-header-icon">C</div><div><h3>Contract and Build Questions</h3><p>Ask about your contract, selections, timeline, and next steps</p></div></div>
-    <div class="quick-bar">
-      <span class="quick-label">Try:</span>
-      <button class="quick-btn" onclick="askContract('When is my closing date?')">Closing date?</button>
-      <button class="quick-btn" onclick="askContract('What warranties do I have?')">Warranties?</button>
-      <button class="quick-btn" onclick="askContract('What flooring did I choose?')">My flooring?</button>
-      <button class="quick-btn" onclick="askContract('What appliances am I getting?')">My appliances?</button>
-      <button class="quick-btn" onclick="askContract('What color is my exterior?')">Exterior colors?</button>
-      <button class="quick-btn" onclick="askContract('What are my next steps?')">Next steps?</button>
-    </div>
-    <div class="chat-messages" id="contract-messages"><div class="welcome-msg"><div class="wm-title">Your contract and build details</div><p>Ask me about your design selections, timeline, warranties, or anything from your purchase contract.</p></div></div>
-    <div class="chat-input-bar">
-      <textarea id="contract-input" placeholder="Ask about your contract or build..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat('contract')}" oninput="autoResize(this)"></textarea>
-      <button class="send-btn" id="contract-send" onclick="sendChat('contract')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-    </div>
-    <div class="chat-disclaimer">Based on your contract summary. Verify specifics with Epcon or your agent.</div>
-  </div>
-</div>
-
-<div class="tab-panel" id="tab-design">
-  <div class="design-panel">
-
-    <div class="design-section">
-      <div class="design-section-title">Paint Colors</div>
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-swatch" style="background:#D1CBC1;color:#5a5046;">SW7029 Agreeable Gray</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Agreeable Gray SW7029</div>
-            <div class="design-card-room">Interior Walls - Entire Home</div>
-            <div class="design-card-desc">Warm greige - one of Sherwin-Williams most popular neutral interior colors.</div>
-            <a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/sw7029-agreeable-gray" target="_blank">View Color</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-swatch" style="background:#64696C;color:#fff;">SW7075 Web Gray</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Web Gray SW7075</div>
-            <div class="design-card-room">Front Door</div>
-            <div class="design-card-desc">Deep sophisticated gray with cool blue undertones. Bold front door statement.</div>
-            <a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/sw7075-web-gray" target="_blank">View Color</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-swatch" style="background:#6B7075;color:#fff;">SW7072 Online</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Online SW7072</div>
-            <div class="design-card-room">Exterior Primary Siding</div>
-            <div class="design-card-desc">LP SmartSide primary siding body color - CFN-7 Hillsborough palette.</div>
-            <a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/sw7072-online" target="_blank">View Color</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-swatch" style="background:#787E7A;color:#fff;">SW7074 Software</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Software SW7074</div>
-            <div class="design-card-room">Exterior Secondary Siding</div>
-            <div class="design-card-desc">LP SmartSide secondary siding accent color - CFN-7 Hillsborough palette.</div>
-            <a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/sw7074-software" target="_blank">View Color</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-swatch" style="background:#F4EEE8;color:#888;">SW7005 Pure White</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Pure White SW7005</div>
-            <div class="design-card-room">Exterior Trim and Louvers</div>
-            <div class="design-card-desc">Clean crisp white for all exterior trim, brackets, and louvers.</div>
-            <a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/white-paint-colors/sw7005-pure-white" target="_blank">View Color</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="design-section">
-      <div class="design-section-title">Flooring</div>
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-icon">wood</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Knotted Chestnut Laminate</div>
-            <div class="design-card-room">Living, Dining, Kitchen, Foyer, Den, Mudroom</div>
-            <div class="design-card-desc">Mohawk Rustic Moor 7.5 inch wide plank. Level 1 Laminate with warm natural wood look.</div>
-            <a class="view-btn" href="https://www.mohawkflooring.com/shop/Laminated_Wood/detail/CAD74/Rustic_Legacy/03W/Knotted_Chestnut" target="_blank">View Product</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-icon">carpet</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Country Walk Aurora Carpet</div>
-            <div class="design-card-room">Master Bedroom and Guest Bedroom</div>
-            <div class="design-card-desc">Mohawk Country Walk - Aurora color. Level 4 carpet with upgraded 8lb pad for extra comfort underfoot.</div>
-            <div style="font-size:11px;color:#888;font-style:italic;">Builder-exclusive — contact Kelli Joyce at Epcon for samples</div>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-icon">tile</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Tuscan Villa - Arezzo Ivory</div>
-            <div class="design-card-room">Master Shower Floor and Walls</div>
-            <div class="design-card-desc">Florida Tile 12x12 - Arezzo Ivory with Bleached Wood grout. Tile extends to ceiling in shower.</div>
-            <a class="view-btn" href="https://www.floridatile.com/products/tuscan-villa/" target="_blank">View Product</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-icon">tile</div>
-          <div class="design-card-body">
-            <div class="design-card-name">CF Prime Balans - White</div>
-            <div class="design-card-room">Guest Bathroom Floor and Tub Wall</div>
-            <div class="design-card-desc">Daltile 12x12 White with Ash grout, installed square. 10x14 wall tile extends to ceiling.</div>
-            <a class="view-btn" href="https://www.daltile.com/products/stone-look/prime/white" target="_blank">View Product</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="design-section">
-      <div class="design-section-title">Countertops</div>
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-icon">stone</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Calacatta Prado Quartz</div>
-            <div class="design-card-room">Kitchen Countertops</div>
-            <div class="design-card-desc">Level 2 Quartz by MSI. White marble look with dramatic gray and gold veining. Polished finish.</div>
-            <a class="view-btn" href="https://www.msisurfaces.com/quartz-countertops/calacatta-prado-quartz/" target="_blank">View Product</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-icon">stone</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Carrara Breve Quartz</div>
-            <div class="design-card-room">Master and Guest Bathroom Countertops</div>
-            <div class="design-card-desc">Level 1 Quartz by MSI. Classic Carrara marble look with soft gray veining on white background.</div>
-            <a class="view-btn" href="https://www.msisurfaces.com/quartz-countertops/carrara-breve-quartz/" target="_blank">View Product</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="design-section">
-      <div class="design-section-title">Kitchen Backsplash</div>
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-swatch" style="background:#5B7A61;color:#fff;">Envy Green</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Emotive - Envy Green</div>
-            <div class="design-card-room">Kitchen Backsplash</div>
-            <div class="design-card-desc">Florida Tile Emotive 3x12. Envy Green with Snow White grout, installed 1/2 offset. Bold kitchen accent.</div>
-            <a class="view-btn" href="https://www.floridatile.com/products/emotive/" target="_blank">View Product</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="design-section">
-      <div class="design-section-title">Cabinets and Hardware</div>
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-swatch" style="background:#6B6560;color:#fff;">Cannon Grey Stain</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Grant - Cannon Grey Stain</div>
-            <div class="design-card-room">Kitchen Cabinets</div>
-            <div class="design-card-desc">Deluxe Layout 42 inch uppers. Quality Signature - Maple Half Overlay in Cannon Grey Stain.</div>
-            <a class="view-btn" href="https://www.aristokraft.com/cabinets/door-styles/quality-signature" target="_blank">View Style</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-swatch" style="background:#E8E0D5;color:#888;">Cottage Paint</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Grant - Cottage Paint</div>
-            <div class="design-card-room">Master Bathroom Cabinets</div>
-            <div class="design-card-desc">Level 2 Quality - Grant Evercore Half Overlay in Cottage Paint. Light clean finish.</div>
-            <a class="view-btn" href="https://www.aristokraft.com/cabinets/door-styles/quality-signature" target="_blank">View Style</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-swatch" style="background:#C0B9AE;color:#555;">Brushed Satin Nickel</div>
-          <div class="design-card-body">
-            <div class="design-card-name">TK1013BSN Hardware</div>
-            <div class="design-card-room">All Cabinets - Kitchen and Bathrooms</div>
-            <div class="design-card-desc">Brushed Satin Nickel pulls and handles on all drawers and doors throughout.</div>
-            <a class="view-btn" href="https://www.aristokraft.com" target="_blank">View Brand</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="design-section">
-      <div class="design-section-title">Fireplace</div>
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-swatch" style="background:#9E9186;color:#fff;">Cherished Greige</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Scrapbook Cherished Greige</div>
-            <div class="design-card-room">Fireplace Surround</div>
-            <div class="design-card-desc">Level 2 - 36 inch gas fireplace. Ceramic tile surround in Cherished Greige installed offset. Includes hearth and mantel.</div>
-            <a class="view-btn" href="https://www.daltile.com" target="_blank">View Brand</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="design-section">
-      <div class="design-section-title">Appliances - GE Stainless Suite</div>
-      <div class="design-grid">
-        <div class="design-card">
-          <div class="design-icon">fridge</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Refrigerator GFE26JYMFS</div>
-            <div class="design-card-room">Kitchen</div>
-            <div class="design-card-desc">GE French Door Refrigerator - Stainless steel finish.</div>
-            <a class="view-btn" href="https://www.geappliances.com/appliance/GE-ENERGY-STAR-27-0-Cu-Ft-French-Door-Refrigerator-GFE26JYMFS" target="_blank">View Product</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-icon">dish</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Dishwasher GDT670SYVFS</div>
-            <div class="design-card-room">Kitchen</div>
-            <div class="design-card-desc">GE ENERGY STAR Top Control Dishwasher with Stainless Interior and Sanitize Cycle.</div>
-            <a class="view-btn" href="https://www.geappliances.com/appliance/GE-ENERGY-STAR-Top-Control-with-Stainless-Steel-Interior-Dishwasher-with-Sanitize-Cycle-GDT670SYVFS" target="_blank">View Product</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-icon">cook</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Gas Cooktop CGP70302NS1</div>
-            <div class="design-card-room">Kitchen</div>
-            <div class="design-card-desc">Cafe 30 inch Built-In Gas Cooktop with 5 sealed burners including 18,000 BTU power burner.</div>
-            <a class="view-btn" href="https://www.cafeappliances.com/appliance/CAFE-30-Gas-Cooktop-CGP70302NS1" target="_blank">View Product</a>
-          </div>
-        </div>
-        <div class="design-card">
-          <div class="design-icon">oven</div>
-          <div class="design-card-body">
-            <div class="design-card-name">Double Wall Oven PT7800SHSS</div>
-            <div class="design-card-room">Kitchen</div>
-            <div class="design-card-desc">GE Profile 30 inch Smart Combination Convection Microwave and Convection Wall Oven - Stainless.</div>
-            <a class="view-btn" href="https://www.geappliances.com/appliance/GE-Profile-30-Smart-Built-In-Convection-Double-Wall-Oven-PT7800SHSS" target="_blank">View Product</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<div class="tab-panel" id="tab-summary">
-  <div class="summary-panel"><div class="summary-grid" id="summaryGrid"></div></div>
-</div>
-<div class="tab-panel" id="tab-contacts">
-  <div class="contact-panel"><div class="contact-grid" id="contactGrid"></div></div>
-</div>
-
+<div class="tabs" id="tabBar"></div>
+<div id="tabContent"></div>
 <footer class="site-footer">2026 Schuyler Realty - <span>Keller Williams</span> Consultants Realty - Grove City, OH</footer>
-
 <script src="clients-config.js"></script>
 <script>
 var code=sessionStorage.getItem('sr_client');
 var client=CLIENTS[code];
 if(!client){window.location.href='index.html';}
 document.getElementById('clientBadge').textContent='Hi '+client.name;
-document.getElementById('propAddress').textContent=client.property+' - '+client.community;
-document.getElementById('propDetails').textContent=client.city+' - Builder: '+client.builder+' - Closing: '+client.closing_window;
+document.getElementById('propAddress').textContent=client.property+(client.community?' - '+client.community:'');
+var det=client.city;
+if(client.type==='newconstruction')det+=(' - Builder: '+client.builder+' - Closing: '+client.closing_window);
+if(client.type==='buyer')det+=(' - Closing: '+client.closing_date);
+if(client.type==='seller')det+=(' - List Price: '+client.list_price);
+document.getElementById('propDetails').textContent=det;
 document.title=client.name+"'s Portal - Schuyler Realty";
 if(client.action_item){var ab=document.getElementById('actionBadge');ab.textContent=client.action_item;ab.style.display='block';}
-var milestonesHTML='';
-var milestones=client.milestones||[];
-for(var i=0;i<milestones.length;i++){
-  var m=milestones[i];
-  var cls=m.status==='done'?'status-done':m.status==='pending'?'status-pending':'status-upcoming';
-  var icon=m.status==='done'?'Complete':m.status==='pending'?'Action Needed':m.date;
-  milestonesHTML+='<div class="summary-row"><span class="summary-label">'+m.name+'</span><span class="summary-value"><span class="status-badge '+cls+'">'+icon+'</span></span></div>';
+
+function fmt(n){return '$'+n.toLocaleString();}
+function badge(s){var m={done:'b-done',pending:'b-pending',upcoming:'b-upcoming',ready:'b-ready',signed:'b-signed'};return '<span class="badge '+(m[s]||'b-upcoming')+'">'+s.charAt(0).toUpperCase()+s.slice(1)+'</span>';}
+function milestonesHTML(){
+  var ms=client.milestones||[];var h='';
+  for(var i=0;i<ms.length;i++){
+    var m=ms[i];var cls=m.status==='done'?'b-done':m.status==='pending'?'b-pending':'b-upcoming';
+    var icon=m.status==='done'?'Complete':m.status==='pending'?'Action Needed':m.date;
+    h+='<div class="row"><span class="rl">'+m.name+'</span><span class="rv"><span class="badge '+cls+'">'+icon+'</span></span></div>';
+  }
+  return h;
 }
-document.getElementById('summaryGrid').innerHTML=
-  '<div class="summary-card"><h3>Your Property</h3>'+
-  '<div class="summary-row"><span class="summary-label">Address</span><span class="summary-value">'+client.property+'</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Community</span><span class="summary-value">'+client.community+'</span></div>'+
-  '<div class="summary-row"><span class="summary-label">City</span><span class="summary-value">'+client.city+'</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Builder</span><span class="summary-value">'+client.builder+'</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Closing</span><span class="summary-value">'+client.closing_window+'</span></div>'+
-  '</div>'+
-  '<div class="summary-card"><h3>Build Milestones</h3>'+milestonesHTML+'</div>'+
-  '<div class="summary-card"><h3>Quick HOA Rules</h3>'+
-  '<div class="summary-row"><span class="summary-label">Window Coverings</span><span class="summary-value">White, off-white, beige, or light gray on exterior</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Pets</span><span class="summary-value">Max 2 dogs or cats - Leash max 8 ft</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Trash Out</span><span class="summary-value">After 5 PM prior day - In by 9 PM collection day</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Pool Guests</span><span class="summary-value">Max 3 - Must be with a resident</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Exterior Changes</span><span class="summary-value">Any change needs Board approval first</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Parking Overnight</span><span class="summary-value">No boats, trailers, motorhomes, or commercial vehicles</span></div>'+
-  '</div>'+
-  '<div class="summary-card"><h3>Your Agent</h3>'+
-  '<div class="summary-row"><span class="summary-label">Agent</span><span class="summary-value">Mark Schuyler</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Brokerage</span><span class="summary-value">Keller Williams Consultants Realty</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Phone</span><span class="summary-value">(740) 953-1769</span></div>'+
-  '<div class="summary-row"><span class="summary-label">Email</span><span class="summary-value">markschuyler@kw.com</span></div>'+
-  '</div>';
-var contacts=[
-  {role:"Your Agent",name:"Mark Schuyler",phone:"(740) 953-1769",email:"markschuyler@kw.com",initials:"MS"},
-  {role:"Sales Consultant",name:"Jennifer Scheel-Patton",phone:"(614) 601-0191",email:"jscheel@epconcommunities.com",initials:"JS"},
-  {role:"Superintendent",name:"Eric Gordon",phone:"",email:"egordon@epconcommunities.com",initials:"EG"},
-  {role:"Contracts Coord.",name:"Donna Kobella",phone:"(614) 652-3570",email:"dkobella@epconcommunities.com",initials:"DK"},
-  {role:"Design Consultant",name:"Kelli Joyce",phone:"(614) 784-3259",email:"kjoyce@epconcommunities.com",initials:"KJ"},
-  {role:"Title Company",name:"Unity Title",phone:"",email:"bmorgan@unitytitle.net",initials:"UT"}
-];
-var contactHTML='';
-for(var j=0;j<contacts.length;j++){
-  var c=contacts[j];
-  contactHTML+='<div class="contact-card"><div class="contact-av">'+c.initials+'</div><div class="contact-info"><div class="role">'+c.role+'</div><div class="cname">'+c.name+'</div>';
-  if(c.phone){contactHTML+='<a href="tel:'+c.phone+'">'+c.phone+'</a>';}
-  contactHTML+='<a href="mailto:'+c.email+'">'+c.email+'</a></div></div>';
+function contactsHTML(){
+  var cs=client.contacts||[];var h='';
+  for(var i=0;i<cs.length;i++){
+    var c=cs[i];
+    h+='<div class="contact-card"><div class="cav">'+c.initials+'</div><div class="ci"><div class="role">'+c.role+'</div><div class="cname">'+c.name+'</div>';
+    if(c.phone&&c.phone!=='TBD'&&c.phone!=='')h+='<a href="tel:'+c.phone+'">'+c.phone+'</a>';
+    if(c.email&&c.email!=='')h+='<a href="mailto:'+c.email+'">'+c.email+'</a>';
+    h+='</div></div>';
+  }
+  return h;
 }
-document.getElementById('contactGrid').innerHTML=contactHTML;
-function switchTab(id,btn){
-  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
-  document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
+function documentsHTML(){
+  var ds=client.documents||[];var h='';
+  for(var i=0;i<ds.length;i++){
+    var d=ds[i];
+    h+='<div class="row"><span class="rl">'+d.name+'</span><span class="rv" style="text-align:right">'+badge(d.status)+'<br><span style="font-size:10px;color:#999">'+d.note+'</span></span></div>';
+  }
+  return h;
 }
-var loading={hoa:false,contract:false};
+
+var tabs=[];
+var panels=[];
+
+// ── NEW CONSTRUCTION ──────────────────────────────────────────────
+if(client.type==='newconstruction'){
+  tabs=['HOA Questions','Contract and Build','My Design Selections','My Summary','My Contacts'];
+  panels=[
+    // HOA
+    '<div class="tab-panel" id="tab-0"><div class="chat-container"><div class="chat-header"><h3>HOA Questions</h3><p>Ask anything about your community rules</p></div><div class="quick-bar"><span class="quick-label">Try:</span><button class="quick-btn" onclick="askChat(0,'Can I have a bird feeder outside?')">Bird feeders?</button><button class="quick-btn" onclick="askChat(0,'What are the pet rules?')">Pet rules?</button><button class="quick-btn" onclick="askChat(0,'Can I install a hot tub?')">Hot tub?</button><button class="quick-btn" onclick="askChat(0,'What color do my blinds need to be?')">Window coverings?</button><button class="quick-btn" onclick="askChat(0,'When do I put my trash out?')">Trash rules?</button><button class="quick-btn" onclick="askChat(0,'Can I park my boat overnight?')">Parking?</button></div><div class="chat-messages" id="msgs-0"><div class="welcome-msg"><div class="wm-title">Hi! I know your HOA rules.</div><p>Ask me anything about your community in plain English.</p></div></div><div class="chat-input-bar"><textarea id="inp-0" placeholder="Ask about your HOA rules..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat(0)}" oninput="autoResize(this)"></textarea><button class="send-btn" id="btn-0" onclick="sendChat(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div><div class="chat-disclaimer">Based on your HOA document. Verify official rulings with your board.</div></div></div>',
+    // Contract
+    '<div class="tab-panel" id="tab-1"><div class="chat-container"><div class="chat-header"><h3>Contract and Build Questions</h3><p>Ask about selections, timeline, warranties, next steps</p></div><div class="quick-bar"><span class="quick-label">Try:</span><button class="quick-btn" onclick="askChat(1,'When is my closing date?')">Closing date?</button><button class="quick-btn" onclick="askChat(1,'What warranties do I have?')">Warranties?</button><button class="quick-btn" onclick="askChat(1,'What flooring did I choose?')">My flooring?</button><button class="quick-btn" onclick="askChat(1,'What appliances am I getting?')">Appliances?</button><button class="quick-btn" onclick="askChat(1,'What are my next steps?')">Next steps?</button></div><div class="chat-messages" id="msgs-1"><div class="welcome-msg"><div class="wm-title">Your contract and build details</div><p>Ask me about your design selections, timeline, or warranties.</p></div></div><div class="chat-input-bar"><textarea id="inp-1" placeholder="Ask about your contract or build..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat(1)}" oninput="autoResize(this)"></textarea><button class="send-btn" id="btn-1" onclick="sendChat(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div><div class="chat-disclaimer">Based on your contract summary. Verify with Epcon or your agent.</div></div></div>',
+    // Design Gallery
+    '<div class="tab-panel" id="tab-2"><div class="scroll-panel"><div class="design-section"><div class="design-section-title">Paint Colors</div><div class="design-grid"><div class="design-card"><div class="design-swatch" style="background:#D1CBC1;color:#5a5046;">SW7029 Agreeable Gray</div><div class="dcb"><div class="dn">Agreeable Gray SW7029</div><div class="dr">Interior Walls</div><div class="dd">Warm greige - Sherwin-Williams most popular neutral.</div><a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/sw7029-agreeable-gray" target="_blank">View Color</a></div></div><div class="design-card"><div class="design-swatch" style="background:#64696C;color:#fff;">SW7075 Web Gray</div><div class="dcb"><div class="dn">Web Gray SW7075</div><div class="dr">Front Door</div><div class="dd">Deep sophisticated gray with cool blue undertones.</div><a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/sw7075-web-gray" target="_blank">View Color</a></div></div><div class="design-card"><div class="design-swatch" style="background:#6B7075;color:#fff;">SW7072 Online</div><div class="dcb"><div class="dn">Online SW7072</div><div class="dr">Exterior Primary Siding</div><div class="dd">LP SmartSide primary color - CFN-7 Hillsborough palette.</div><a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/sw7072-online" target="_blank">View Color</a></div></div><div class="design-card"><div class="design-swatch" style="background:#787E7A;color:#fff;">SW7074 Software</div><div class="dcb"><div class="dn">Software SW7074</div><div class="dr">Exterior Secondary Siding</div><div class="dd">LP SmartSide secondary accent color.</div><a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/neutral-paint-colors/sw7074-software" target="_blank">View Color</a></div></div><div class="design-card"><div class="design-swatch" style="background:#F4EEE8;color:#888;">SW7005 Pure White</div><div class="dcb"><div class="dn">Pure White SW7005</div><div class="dr">Exterior Trim</div><div class="dd">Clean white for all exterior trim and louvers.</div><a class="view-btn" href="https://www.sherwin-williams.com/en-us/color/color-family/white-paint-colors/sw7005-pure-white" target="_blank">View Color</a></div></div></div></div><div class="design-section"><div class="design-section-title">Flooring</div><div class="design-grid"><div class="design-card"><div class="design-icon">Laminate Plank</div><div class="dcb"><div class="dn">Knotted Chestnut</div><div class="dr">Living, Dining, Kitchen, Foyer, Den, Mudroom</div><div class="dd">Mohawk Rustic Moor 7.5 inch wide plank - Level 1 Laminate.</div><a class="view-btn" href="https://www.floorcity.com/products/mohawk-revwood-select-rare-vintage-knotted-chestnut-cdl74-03w" target="_blank">View Product</a></div></div><div class="design-card"><div class="design-icon">Carpet</div><div class="dcb"><div class="dn">Country Walk Aurora</div><div class="dr">Master and Guest Bedroom</div><div class="dd">Mohawk Level 4 carpet with 8lb pad. Builder-exclusive selection.</div><div class="info-note">Builder-exclusive - contact Kelli Joyce at Epcon for samples</div></div></div><div class="design-card"><div class="design-icon">Shower Tile</div><div class="dcb"><div class="dn">Tuscan Villa - Arezzo Ivory</div><div class="dr">Master Shower Floor and Walls</div><div class="dd">Florida Tile 12x12 - Arezzo Ivory, Bleached Wood grout. Tile to ceiling.</div><a class="view-btn" href="https://www.floridatile.com/products/tuscan-villa/" target="_blank">View Product</a></div></div><div class="design-card"><div class="design-icon">Bath Tile</div><div class="dcb"><div class="dn">CF Prime Balans - White</div><div class="dr">Guest Bathroom</div><div class="dd">Daltile 12x12 White, Ash grout. 10x14 wall tile to ceiling.</div><a class="view-btn" href="https://www.daltile.com/products/stone-look/prime/white" target="_blank">View Product</a></div></div></div></div><div class="design-section"><div class="design-section-title">Countertops</div><div class="design-grid"><div class="design-card"><div class="design-icon">Quartz</div><div class="dcb"><div class="dn">Calacatta Prado Quartz</div><div class="dr">Kitchen</div><div class="dd">Level 2 Quartz by MSI. White with dramatic gray and gold veining.</div><a class="view-btn" href="https://www.msisurfaces.com/quartz-countertops/calacatta-prado-quartz/" target="_blank">View Product</a></div></div><div class="design-card"><div class="design-icon">Quartz</div><div class="dcb"><div class="dn">Carrara Breve Quartz</div><div class="dr">Master and Guest Bathrooms</div><div class="dd">Level 1 Quartz by MSI. Classic Carrara marble look.</div><a class="view-btn" href="https://www.msisurfaces.com/quartz-countertops/carrara-breve-quartz/" target="_blank">View Product</a></div></div></div></div><div class="design-section"><div class="design-section-title">Kitchen Backsplash</div><div class="design-grid"><div class="design-card"><div class="design-swatch" style="background:#5B7A61;color:#fff;">Envy Green</div><div class="dcb"><div class="dn">Emotive - Envy Green</div><div class="dr">Kitchen Backsplash</div><div class="dd">Florida Tile Emotive 3x12. Snow White grout, 1/2 offset install.</div><a class="view-btn" href="https://www.floridatile.com/products/emotive/" target="_blank">View Product</a></div></div></div></div><div class="design-section"><div class="design-section-title">Appliances - GE Stainless Suite</div><div class="design-grid"><div class="design-card"><div class="design-icon">Refrigerator</div><div class="dcb"><div class="dn">GFE26JYMFS</div><div class="dr">Kitchen</div><div class="dd">GE French Door Refrigerator - Stainless steel.</div><a class="view-btn" href="https://www.geappliances.com/appliance/GE-ENERGY-STAR-27-0-Cu-Ft-French-Door-Refrigerator-GFE26JYMFS" target="_blank">View Product</a></div></div><div class="design-card"><div class="design-icon">Dishwasher</div><div class="dcb"><div class="dn">GDT670SYVFS</div><div class="dr">Kitchen</div><div class="dd">GE ENERGY STAR Top Control Dishwasher with Sanitize Cycle.</div><a class="view-btn" href="https://www.geappliances.com/appliance/GE-ENERGY-STAR-Top-Control-with-Stainless-Steel-Interior-Dishwasher-with-Sanitize-Cycle-GDT670SYVFS" target="_blank">View Product</a></div></div><div class="design-card"><div class="design-icon">Gas Cooktop</div><div class="dcb"><div class="dn">CGP70302NS1</div><div class="dr">Kitchen</div><div class="dd">Cafe 30 inch Gas Cooktop with 5 sealed burners.</div><a class="view-btn" href="https://www.cafeappliances.com/appliance/CAFE-30-Gas-Cooktop-CGP70302NS1" target="_blank">View Product</a></div></div><div class="design-card"><div class="design-icon">Wall Oven</div><div class="dcb"><div class="dn">PT7800SHSS</div><div class="dr">Kitchen</div><div class="dd">GE Profile Double Wall Oven - Convection Microwave combo.</div><a class="view-btn" href="https://www.geappliances.com/appliance/GE-Profile-30-Smart-Built-In-Convection-Double-Wall-Oven-PT7800SHSS" target="_blank">View Product</a></div></div></div></div></div></div>',
+    // Summary
+    '<div class="tab-panel" id="tab-3"><div class="scroll-panel"><div class="panel-grid"><div class="card"><h3>Your Property</h3><div class="row"><span class="rl">Address</span><span class="rv">'+client.property+'</span></div><div class="row"><span class="rl">Community</span><span class="rv">'+client.community+'</span></div><div class="row"><span class="rl">City</span><span class="rv">'+client.city+'</span></div><div class="row"><span class="rl">Builder</span><span class="rv">'+client.builder+'</span></div><div class="row"><span class="rl">Closing</span><span class="rv">'+client.closing_window+'</span></div></div><div class="card"><h3>Build Milestones</h3>'+milestonesHTML()+'</div><div class="card"><h3>Quick HOA Rules</h3><div class="row"><span class="rl">Window Coverings</span><span class="rv">White, off-white, beige, or light gray</span></div><div class="row"><span class="rl">Pets</span><span class="rv">Max 2 dogs or cats - Leash 8 ft max</span></div><div class="row"><span class="rl">Trash Out</span><span class="rv">After 5 PM prior day</span></div><div class="row"><span class="rl">Parking</span><span class="rv">No boats, trailers, or motorhomes overnight</span></div></div><div class="card"><h3>Your Agent</h3><div class="row"><span class="rl">Agent</span><span class="rv">Mark Schuyler</span></div><div class="row"><span class="rl">Phone</span><span class="rv">(740) 953-1769</span></div><div class="row"><span class="rl">Email</span><span class="rv">markschuyler@kw.com</span></div></div></div></div></div>',
+    // Contacts
+    '<div class="tab-panel" id="tab-4"><div class="scroll-panel"><div class="contact-grid">'+contactsHTML()+'</div></div></div>'
+  ];
+}
+
+// ── RESALE BUYER ──────────────────────────────────────────────
+else if(client.type==='buyer'){
+  tabs=['Contract Timeline','HOA Questions','My Documents','Neighborhood Info','My Contacts'];
+  panels=[
+    // Timeline
+    '<div class="tab-panel" id="tab-0"><div class="scroll-panel"><div class="panel-grid"><div class="card"><h3>Contract Milestones</h3>'+milestonesHTML()+'</div><div class="card"><h3>Key Dates</h3><div class="row"><span class="rl">Closing Date</span><span class="rv">'+client.closing_date+'</span></div><div class="row"><span class="rl">Property</span><span class="rv">'+client.property+'</span></div><div class="row"><span class="rl">City</span><span class="rv">'+client.city+'</span></div></div><div class="card"><h3>Important Reminders</h3><div class="row"><span class="rl">Wire Fraud</span><span class="rv" style="color:#CC0000;font-weight:600">Never wire funds by email. Always call first.</span></div><div class="row"><span class="rl">Utilities</span><span class="rv">Schedule transfer for closing day</span></div><div class="row"><span class="rl">Insurance</span><span class="rv">Homeowners policy must be in place before closing</span></div></div></div></div></div>',
+    // HOA
+    '<div class="tab-panel" id="tab-1"><div class="chat-container"><div class="chat-header"><h3>HOA Questions</h3><p>Ask anything about your new community rules</p></div><div class="quick-bar"><span class="quick-label">Try:</span><button class="quick-btn" onclick="askChat(1,'What are the pet rules?')">Pet rules?</button><button class="quick-btn" onclick="askChat(1,'Can I park my boat?')">Parking?</button><button class="quick-btn" onclick="askChat(1,'Can I put up a fence?')">Fences?</button><button class="quick-btn" onclick="askChat(1,'What are the rental rules?')">Rental rules?</button></div><div class="chat-messages" id="msgs-1"><div class="welcome-msg"><div class="wm-title">HOA Questions</div><p>Ask me anything about your new community rules. I will answer based on the HOA documents for your property.</p></div></div><div class="chat-input-bar"><textarea id="inp-1" placeholder="Ask about your HOA rules..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat(1)}" oninput="autoResize(this)"></textarea><button class="send-btn" id="btn-1" onclick="sendChat(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div><div class="chat-disclaimer">Based on HOA documents for your property. Verify with your HOA board.</div></div></div>',
+    // Documents
+    '<div class="tab-panel" id="tab-2"><div class="scroll-panel"><div class="panel-grid"><div class="card"><h3>Your Documents</h3>'+documentsHTML()+'</div><div class="card" style="background:#F0F9FF;border-color:#BAE6FD"><h3 style="color:#0369A1">DocuSign Integration Coming Soon</h3><div style="font-size:13px;color:#0c4a6e;line-height:1.6">Your documents will be accessible directly here once DocuSign is connected. You will be able to view, sign, and download all your transaction documents in one place.</div></div></div></div></div>',
+    // Neighborhood
+    '<div class="tab-panel" id="tab-3"><div class="chat-container"><div class="chat-header"><h3>Neighborhood Info</h3><p>Ask about schools, local amenities, and community details</p></div><div class="quick-bar"><span class="quick-label">Try:</span><button class="quick-btn" onclick="askChat(3,'What school district am I in?')">Schools?</button><button class="quick-btn" onclick="askChat(3,'What grocery stores are nearby?')">Grocery stores?</button><button class="quick-btn" onclick="askChat(3,'What parks are close by?')">Parks?</button><button class="quick-btn" onclick="askChat(3,'What restaurants are nearby?')">Restaurants?</button></div><div class="chat-messages" id="msgs-3"><div class="welcome-msg"><div class="wm-title">Your New Neighborhood</div><p>Ask me about schools, shopping, parks, restaurants, and anything else about your new area.</p></div></div><div class="chat-input-bar"><textarea id="inp-3" placeholder="Ask about your neighborhood..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat(3)}" oninput="autoResize(this)"></textarea><button class="send-btn" id="btn-3" onclick="sendChat(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button></div><div class="chat-disclaimer">Based on neighborhood info for your property area.</div></div></div>',
+    // Contacts
+    '<div class="tab-panel" id="tab-4"><div class="scroll-panel"><div class="contact-grid">'+contactsHTML()+'</div></div></div>'
+  ];
+}
+
+// ── SELLER ────────────────────────────────────────────────────
+else if(client.type==='seller'){
+  var ns=client.net_sheet||{};
+  var salePrice=ns.estimated_sale_price||0;
+  var commission=Math.round(salePrice*(ns.agent_commission||0.06));
+  var transferTax=Math.round(salePrice*(ns.transfer_tax||0.004));
+  var totalCosts=commission+transferTax+(ns.title_fees||0)+(ns.home_warranty||0)+(ns.misc_closing||0);
+  var netProceeds=salePrice-(ns.mortgage_payoff||0)-totalCosts;
+  var ma=client.market_activity||{};
+  tabs=['Listing Timeline','Market Activity','My Documents','Net Sheet','My Contacts'];
+  panels=[
+    // Timeline
+    '<div class="tab-panel" id="tab-0"><div class="scroll-panel"><div class="panel-grid"><div class="card"><h3>Listing Milestones</h3>'+milestonesHTML()+'</div><div class="card"><h3>Listing Details</h3><div class="row"><span class="rl">Property</span><span class="rv">'+client.property+'</span></div><div class="row"><span class="rl">List Price</span><span class="rv" style="color:var(--kw-red);font-weight:700">'+client.list_price+'</span></div><div class="row"><span class="rl">List Date</span><span class="rv">May 28, 2026</span></div></div></div></div></div>',
+    // Market Activity
+    '<div class="tab-panel" id="tab-1"><div class="scroll-panel" style="max-width:900px"><div class="market-grid"><div class="card market-stat"><div class="num">'+ma.days_on_market+'</div><div class="lbl">Days on Market</div></div><div class="card market-stat"><div class="num">'+ma.showings+'</div><div class="lbl">Showings</div></div><div class="card market-stat"><div class="num">'+ma.open_house_visitors+'</div><div class="lbl">Open House Visitors</div></div><div class="card market-stat"><div class="num">'+ma.online_views+'</div><div class="lbl">Online Views</div></div><div class="card market-stat"><div class="num">'+ma.saves+'</div><div class="lbl">Saves / Favorites</div></div></div><div class="card" style="max-width:900px;margin-bottom:16px"><h3>Buyer Feedback Summary</h3><div style="font-size:14px;color:#374151;line-height:1.7;padding:4px 0">'+ma.feedback_summary+'</div></div><div class="kw-badge">KW Command Integration Coming Soon - Showings and feedback will sync automatically from your KW Command dashboard.</div></div></div>',
+    // Documents
+    '<div class="tab-panel" id="tab-2"><div class="scroll-panel"><div class="panel-grid"><div class="card"><h3>Your Documents</h3>'+documentsHTML()+'</div><div class="card" style="background:#F0F9FF;border-color:#BAE6FD"><h3 style="color:#0369A1">DocuSign Integration Coming Soon</h3><div style="font-size:13px;color:#0c4a6e;line-height:1.6">All your listing documents, disclosures, and offers will be accessible and signable directly here once DocuSign is connected.</div></div></div></div></div>',
+    // Net Sheet
+    '<div class="tab-panel" id="tab-3"><div class="scroll-panel"><div class="panel-grid"><div class="card"><h3>Estimated Net Sheet</h3><div class="row"><span class="rl">Estimated Sale Price</span><span class="rv" style="font-weight:700">'+fmt(salePrice)+'</span></div><div class="row"><span class="rl">Agent Commission (6%)</span><span class="rv" style="color:#CC0000">-'+fmt(commission)+'</span></div><div class="row"><span class="rl">Transfer Tax</span><span class="rv" style="color:#CC0000">-'+fmt(transferTax)+'</span></div><div class="row"><span class="rl">Title Fees</span><span class="rv" style="color:#CC0000">-'+fmt(ns.title_fees||0)+'</span></div><div class="row"><span class="rl">Home Warranty</span><span class="rv" style="color:#CC0000">-'+fmt(ns.home_warranty||0)+'</span></div><div class="row"><span class="rl">Misc Closing Costs</span><span class="rv" style="color:#CC0000">-'+fmt(ns.misc_closing||0)+'</span></div><div class="row"><span class="rl">Mortgage Payoff</span><span class="rv" style="color:#CC0000">-'+fmt(ns.mortgage_payoff||0)+'</span></div><div class="net-total"><div class="nt-label">Estimated Net Proceeds</div><div class="nt-amount">'+fmt(netProceeds)+'</div></div></div><div class="card" style="background:#FFFBEB;border-color:#FDE68A"><h3 style="color:#92400E">Disclaimer</h3><div style="font-size:12px;color:#78350F;line-height:1.6">This is an estimate only. Actual proceeds will vary based on final sale price, negotiated terms, prorated taxes, HOA fees, and other factors. Your title company will provide an official closing disclosure before closing.</div></div></div></div></div>',
+    // Contacts
+    '<div class="tab-panel" id="tab-4"><div class="scroll-panel"><div class="contact-grid">'+contactsHTML()+'</div></div></div>'
+  ];
+}
+
+// Render tabs and panels
+var tabBar=document.getElementById('tabBar');
+var tabContent=document.getElementById('tabContent');
+tabs.forEach(function(t,i){
+  var btn=document.createElement('button');
+  btn.className='tab-btn'+(i===0?' active':'');
+  btn.textContent=t;
+  btn.onclick=function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+    this.classList.add('active');
+    document.getElementById('tab-'+i).classList.add('active');
+  };
+  tabBar.appendChild(btn);
+});
+tabContent.innerHTML=panels.join('');
+if(panels.length>0)document.getElementById('tab-0').classList.add('active');
+
+// Chat system
+var chatContexts={};
+function getChatSystem(idx){
+  if(client.type==='newconstruction'){
+    if(idx===0)return 'You are an HOA assistant for '+client.community+' in '+client.city+'. Help '+client.name+' understand their community rules.\n\nHOA Rules:\n'+client.hoa_rules+'\n\nAnswer clearly in plain English. Cite the section. Be concise.';
+    return 'You are a real estate assistant helping '+client.name+' with their new home at '+client.property+'. Contract details:\n'+client.contract_notes+'\n\nAnswer clearly and concisely.';
+  }
+  if(client.type==='buyer'){
+    if(idx===1)return 'You are an HOA assistant for '+client.community+' in '+client.city+'. Help '+client.name+' understand their community rules.\n\nHOA Rules:\n'+client.hoa_rules+'\n\nAnswer clearly in plain English. Cite the section. Be concise.';
+    if(idx===3)return 'You are a neighborhood guide for '+client.city+'. Help '+client.name+' who is moving to '+client.property+'.\n\n'+client.contract_notes+'\n\nAnswer questions about schools, shopping, parks, and local amenities helpfully and concisely.';
+    return 'You are a real estate assistant helping '+client.name+' with their purchase at '+client.property+'. Details:\n'+client.contract_notes+'\n\nAnswer clearly and concisely.';
+  }
+  if(client.type==='seller'){
+    return 'You are a real estate assistant helping '+client.name+' sell their home at '+client.property+'. Listing details:\n'+client.contract_notes+'\n\nAnswer clearly and concisely.';
+  }
+  return 'You are a helpful real estate assistant.';
+}
+var loading={};
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
-function askHOA(q){document.getElementById('hoa-input').value=q;sendChat('hoa');}
-function askContract(q){document.getElementById('contract-input').value=q;sendChat('contract');}
-function addMsg(area,text,type){
-  var box=document.getElementById(area+'-messages');
+function askChat(idx,q){var inp=document.getElementById('inp-'+idx);if(inp){inp.value=q;sendChat(idx);}}
+function addMsg(idx,text,type){
+  var box=document.getElementById('msgs-'+idx);if(!box)return;
   var msg=document.createElement('div');msg.className='msg '+type;
   var av=document.createElement('div');av.className='msg-av';av.textContent=type==='bot'?'SR':client.name.charAt(0);
   var bub=document.createElement('div');bub.className='msg-bubble';
-  if(type==='bot'){bub.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n- /g,'<br>- ').replace(/\n/g,'<br>');}
+  if(type==='bot'){bub.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');}
   else{bub.textContent=text;}
   msg.appendChild(av);msg.appendChild(bub);box.appendChild(msg);box.scrollTop=box.scrollHeight;
-  return msg;
 }
-function addTyping(area){
-  var box=document.getElementById(area+'-messages');
-  var t=document.createElement('div');t.className='msg bot';t.id=area+'-typing';
+function addTyping(idx){
+  var box=document.getElementById('msgs-'+idx);if(!box)return;
+  var t=document.createElement('div');t.className='msg bot';t.id='typing-'+idx;
   t.innerHTML='<div class="msg-av">SR</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
   box.appendChild(t);box.scrollTop=box.scrollHeight;
 }
-function sendChat(area){
-  if(loading[area])return;
-  var inp=document.getElementById(area+'-input');
+function sendChat(idx){
+  if(loading[idx])return;
+  var inp=document.getElementById('inp-'+idx);if(!inp)return;
   var q=inp.value.trim();if(!q)return;
-  loading[area]=true;document.getElementById(area+'-send').disabled=true;
+  loading[idx]=true;
+  var btn=document.getElementById('btn-'+idx);if(btn)btn.disabled=true;
   inp.value='';inp.style.height='auto';
-  var wm=document.querySelector('#'+area+'-messages .welcome-msg');if(wm)wm.remove();
-  addMsg(area,q,'user');addTyping(area);
-  var sys=area==='hoa'
-    ?'You are an HOA assistant for '+client.community+' in '+client.city+'. Help '+client.name+' understand their community rules. HOA Rules:\n\n'+client.hoa_rules+'\n\nAnswer clearly in plain English. Cite the specific section. If Board approval is needed say so. Keep answers concise.'
-    :'You are a real estate assistant helping '+client.name+' with their new home at '+client.property+', '+client.city+'. Contract details:\n\n'+client.contract_notes+'\n\nAnswer clearly and helpfully. Be specific. Keep answers concise.';
-  fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:sys,messages:[{role:'user',content:q}]})})
-    .then(function(res){return res.json();})
-    .then(function(data){
-      var t=document.getElementById(area+'-typing');if(t)t.remove();
-      addMsg(area,data.content||'Sorry, I could not get an answer. Please try again.','bot');
-      loading[area]=false;document.getElementById(area+'-send').disabled=false;
+  var wm=document.querySelector('#msgs-'+idx+' .welcome-msg');if(wm)wm.remove();
+  addMsg(idx,q,'user');addTyping(idx);
+  fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:getChatSystem(idx),messages:[{role:'user',content:q}]})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var t=document.getElementById('typing-'+idx);if(t)t.remove();
+      addMsg(idx,d.content||'Sorry I could not get an answer. Please try again.','bot');
+      loading[idx]=false;if(btn)btn.disabled=false;
     }).catch(function(){
-      var t=document.getElementById(area+'-typing');if(t)t.remove();
-      addMsg(area,'Something went wrong. Please try again.','bot');
-      loading[area]=false;document.getElementById(area+'-send').disabled=false;
+      var t=document.getElementById('typing-'+idx);if(t)t.remove();
+      addMsg(idx,'Something went wrong. Please try again.','bot');
+      loading[idx]=false;if(btn)btn.disabled=false;
     });
 }
 function logout(){sessionStorage.removeItem('sr_client');window.location.href='index.html';}

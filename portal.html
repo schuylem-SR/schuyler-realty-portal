@@ -181,7 +181,7 @@ function qBar(qKey,chatIdx){
   var qs=QUICK[qKey]||[];
   var h='<div class="qb"><span class="ql">Try:</span>';
   for(var i=0;i<qs.length;i++){
-    h+='<button class="qbtn" data-ci="'+chatIdx+'" data-qi="'+i+'">'+qs[i].replace(/?$/,'?')+'</button>';
+    h+='<button class="qbtn" data-ci="'+chatIdx+'" data-qi="'+i+'">'+qs[i]+'</button>';
   }
   return h+'</div>';
 }

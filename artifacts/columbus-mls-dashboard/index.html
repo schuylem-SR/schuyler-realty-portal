@@ -1,0 +1,151 @@
+<title>Columbus Metro MLS Board</title>
+<style>
+  :root{--bg:#f6f4ef;--surface:#ffffff;--surface-2:#efece3;--ink:#1a2233;--ink-dim:#5b6472;--line:#dfdacd;--navy:#1c2b4a;--navy-2:#2c3f66;--red:#a83a2c;--red-soft:#f3e2dd;--green:#2f6d4f;--green-soft:#e1eee4;--amber:#8a6a1f;--amber-soft:#f2e8cf;color-scheme:light;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){--bg:#12161f;--surface:#191e2a;--surface-2:#202634;--ink:#e9e6de;--ink-dim:#9aa1ae;--line:#2c3242;--navy:#7d93c4;--navy-2:#9fb0d6;--red:#e2897a;--red-soft:#3a2521;--green:#8fcaa8;--green-soft:#1c2e24;--amber:#d9bd72;--amber-soft:#332b16;color-scheme:dark;}
+  }
+  :root[data-theme="dark"]{--bg:#12161f;--surface:#191e2a;--surface-2:#20263d;--ink:#e9e6de;--ink-dim:#9aa1ae;--line:#2c3242;--navy:#7d93c4;--navy-2:#9fb0d6;--red:#e2897a;--red-soft:#3a2521;--green:#8fcaa8;--green-soft:#1c2e24;--amber:#d9bd72;--amber-soft:#332b16;color-scheme:dark;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;padding:28px 16px 48px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+  h1,h2{font-family:'Fraunces',Georgia,'Times New Roman',serif;}
+  header.board{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;}
+  header.board .title-block h1{margin:0;font-size:clamp(1.5rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.01em;color:var(--navy);text-wrap:balance;}
+  header.board .title-block p{margin:6px 0 0;color:var(--ink-dim);font-size:0.92rem;}
+  .updated{font-size:0.8rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-dim);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap;}
+  .updated b{color:var(--ink);font-weight:600;letter-spacing:0;}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px;}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+  .stat .label{font-size:0.74rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-dim);display:flex;align-items:center;gap:7px;}
+  .stat .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .stat .value{font-family:'Fraunces',Georgia,serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:600;margin-top:4px;font-variant-numeric:tabular-nums;}
+  .stat .sub{font-size:0.78rem;color:var(--ink-dim);margin-top:2px;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:0.76rem;color:var(--ink-dim);margin-bottom:10px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .legend .dot{width:8px;height:8px;border-radius:50%;}
+  .tablewrap{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;min-width:640px;font-size:0.92rem;}
+  thead th{text-align:left;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-dim);font-weight:600;padding:14px 14px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);}
+  thead th.num, tbody td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover td{background:var(--surface-2);}
+  tbody tr.primary td{font-weight:600;}
+  .city{display:flex;align-items:center;gap:9px;}
+  .zone{font-size:0.64rem;text-transform:uppercase;letter-spacing:0.04em;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--ink-dim);white-space:nowrap;}
+  .zone.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .zone.belt,.zone.inner,.zone.extended{background:var(--surface-2);}
+  .pill{display:inline-flex;min-width:2.1em;justify-content:center;padding:2px 8px;border-radius:999px;font-weight:600;font-variant-numeric:tabular-nums;}
+  .pill.zero{color:var(--ink-dim);background:transparent;font-weight:400;}
+  .pill.amber{background:var(--amber-soft);color:var(--amber);}
+  .pill.green{background:var(--green-soft);color:var(--green);}
+  .pill.red{background:var(--red-soft);color:var(--red);}
+  footer{margin-top:18px;font-size:0.78rem;color:var(--ink-dim);text-align:center;}
+  @media (max-width:640px){.stats{grid-template-columns:1fr;}table{min-width:560px;}}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+
+<div class="wrap">
+  <header class="board">
+    <div class="title-block">
+      <h1>Columbus Metro MLS Board</h1>
+      <p>Coming Soon, new listings and closings across 20 Franklin&nbsp;County&nbsp;&amp;&nbsp;metro cities &mdash; Columbus REALTORS&reg; Flexmls</p>
+    </div>
+    <div class="updated">Updated <b id="updatedLabel">&mdash;</b></div>
+  </header>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="label"><span class="dot" style="background:var(--amber)"></span>Coming Soon</div>
+      <div class="value" id="totalComingSoon">&mdash;</div>
+      <div class="sub">Across 20 cities</div>
+    </div>
+    <div class="stat">
+      <div class="label"><span class="dot" style="background:var(--green)"></span>New, last 7 days</div>
+      <div class="value" id="totalNew7">&mdash;</div>
+      <div class="sub">Active, listed this week</div>
+    </div>
+    <div class="stat">
+      <div class="label"><span class="dot" style="background:var(--red)"></span>Sold, last 7 days</div>
+      <div class="value" id="totalSold7">&mdash;</div>
+      <div class="sub">Closed this week</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--navy)"></span>Primary city</span>
+    <span><span class="dot" style="background:#9c9484"></span>Belt / Inner / Extended suburbs</span>
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>City</th>
+          <th class="num">Coming Soon</th>
+          <th class="num">New (7d)</th>
+          <th class="num">Sold (7d)</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <footer>Franklin County &amp; central Ohio suburbs, pulled from Columbus REALTORS&reg; Flexmls saved searches, grouped by mailing city. Coming Soon and New counts are point-in-time; Sold reflects closings in the trailing 7 days.</footer>
+</div>
+
+<script>
+// ---- DATA: refreshed daily from Flexmls saved searches "DAILY Coming Soon 20", "DAILY New 7d 20", "DAILY Sold 7d 20" ----
+const lastUpdated = 'Oct 1, 2026';
+
+const DATA = [
+  { city: 'Columbus',          zone: 'primary',  comingSoon: 48, new7: 112, sold7: 174 },
+  { city: 'Dublin',            zone: 'belt',     comingSoon: 8,  new7: 11,  sold7: 12  },
+  { city: 'Hilliard',          zone: 'belt',     comingSoon: 5,  new7: 8,   sold7: 26  },
+  { city: 'Westerville',       zone: 'belt',     comingSoon: 8,  new7: 18,  sold7: 24  },
+  { city: 'Gahanna',           zone: 'belt',     comingSoon: 0,  new7: 4,   sold7: 4   },
+  { city: 'Reynoldsburg',      zone: 'belt',     comingSoon: 1,  new7: 6,   sold7: 12  },
+  { city: 'Powell',            zone: 'belt',     comingSoon: 6,  new7: 11,  sold7: 18  },
+  { city: 'Worthington',       zone: 'belt',     comingSoon: 1,  new7: 2,   sold7: 5   },
+  { city: 'Upper Arlington',   zone: 'belt',     comingSoon: 0,  new7: 3,   sold7: 2   },
+  { city: 'Grove City',        zone: 'belt',     comingSoon: 5,  new7: 14,  sold7: 16  },
+  { city: 'Bexley',            zone: 'inner',    comingSoon: 0,  new7: 1,   sold7: 0   },
+  { city: 'Whitehall',         zone: 'inner',    comingSoon: 1,  new7: 1,   sold7: 1   },
+  { city: 'Grandview Heights', zone: 'inner',    comingSoon: 0,  new7: 2,   sold7: 0   },
+  { city: 'Groveport',         zone: 'inner',    comingSoon: 0,  new7: 0,   sold7: 3   },
+  { city: 'New Albany',        zone: 'extended', comingSoon: 3,  new7: 7,   sold7: 3   },
+  { city: 'Pickerington',      zone: 'extended', comingSoon: 1,  new7: 11,  sold7: 3   },
+  { city: 'Canal Winchester',  zone: 'extended', comingSoon: 1,  new7: 7,   sold7: 9   },
+  { city: 'Plain City',        zone: 'extended', comingSoon: 3,  new7: 10,  sold7: 9   },
+  { city: 'Marysville',        zone: 'extended', comingSoon: 3,  new7: 13,  sold7: 7   },
+  { city: 'Newark',            zone: 'extended', comingSoon: 5,  new7: 8,   sold7: 11  },
+];
+
+function pillClass(n, kind){
+  if (n === null || n === undefined || n === 0) return 'pill zero';
+  return 'pill ' + kind;
+}
+function fmt(n){ return (n === null || n === undefined) ? '&mdash;' : n; }
+
+function render(){
+  document.getElementById('updatedLabel').textContent = lastUpdated;
+  const totals = DATA.reduce((acc, r) => {
+    acc.comingSoon += r.comingSoon || 0;
+    acc.new7 += r.new7 || 0;
+    acc.sold7 += r.sold7 || 0;
+    return acc;
+  }, { comingSoon: 0, new7: 0, sold7: 0 });
+  document.getElementById('totalComingSoon').textContent = totals.comingSoon;
+  document.getElementById('totalNew7').textContent = totals.new7;
+  document.getElementById('totalSold7').textContent = totals.sold7;
+  const sorted = [...DATA].sort((a, b) => (b.new7 + b.sold7) - (a.new7 + a.sold7));
+  document.getElementById('rows').innerHTML = sorted.map(r => `<tr class="${r.zone === 'primary' ? 'primary' : ''}">
+      <td><div class="city">${r.city}<span class="zone ${r.zone}">${r.zone}</span></div></td>
+      <td class="num"><span class="${pillClass(r.comingSoon,'amber')}">${fmt(r.comingSoon)}</span></td>
+      <td class="num"><span class="${pillClass(r.new7,'green')}">${fmt(r.new7)}</span></td>
+      <td class="num"><span class="${pillClass(r.sold7,'red')}">${fmt(r.sold7)}</span></td>
+    </tr>`).join('');
+}
+render();
+</script>
